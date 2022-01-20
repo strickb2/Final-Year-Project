@@ -14,7 +14,6 @@ class TimeSeries:
         graph_data = {}
         for time_period in self.queries:
             graph_data[time_period] = self._get_data(self.queries[time_period])
-            break
         graph_data = self._time_period_format(graph_data)
         return graph_data
     
