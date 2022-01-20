@@ -33,7 +33,7 @@ class TimeSeries:
                 time_period_data = data[time_period]['Time Series (Daily)'] # Gets the list of day instances
             if time_period == "month":
                 result[time_period] = {}
-                time_period_data = data[time_period]['Time Series (Monthly)'] # Gets the list of month instances
+                time_period_data = data[time_period]['Monthly Time Series'] # Gets the list of month instances
             # else:
                 # Raise Error
             
@@ -48,7 +48,7 @@ class TimeSeries:
                 # Add corresponding close value for given date to y-axis
                 result[time_period]['y_labels'].append(time_period_data[date]['4. close'])
 
-            return result
+        return result
             
     
     
