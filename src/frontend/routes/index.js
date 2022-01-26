@@ -3,11 +3,15 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'StockCompete' });
 });
 
 router.get('/login', function(req, res, next){
-  res.render('login')
+  res.render('login', { title: 'StockCompete | Login' })
+});
+
+router.get('/stock', function(req, res, next){
+  res.render('stock', { title: 'StockCompete | Stock' })
 });
 
 module.exports = router;
