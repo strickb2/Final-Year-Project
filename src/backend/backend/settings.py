@@ -56,10 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000", # node on port 3000
-    "http://127.0.0.1:3000"  # node on port 3000
-]
+
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -138,9 +135,13 @@ REST_FRAMEWORK = {
     ],
 }
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000", # node on port 3000
+    "http://127.0.0.1:3000" # node on port 3000
+]
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

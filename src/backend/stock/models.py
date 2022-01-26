@@ -12,7 +12,7 @@ class APIUser(AbstractUser):
     pps_number = models.CharField(max_length=20, null=False, unique=True)
     address = models.CharField(max_length=250, null=False)
     phone_number = models.CharField(max_length=15, null=False)
-    balance = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    balance = models.DecimalField(max_digits=6, decimal_places=2, default=0.00, blank=True)
 
     REQUIRED_FIELDS = ['name', 'email', 'dob', 'pps_number', 'address', 'phone_number']
 

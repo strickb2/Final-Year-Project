@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+  <head>
+    <title>Sign Up Page</title>
+  </head>
+  <body>
+      <h1>Sign Up</h1>
+      <form id="signup-form">
+        <label for="name-input">Full Name</label>
+        <input type="text" id="name" name="name-input" placeholder="Your full name" required>
+        <label for="username-input">Username</label>
+        <input type="text" name="username-input" id="username" placeholder="Your username" required>
+        <label for="password-input">Password</label>
+        <input type="password" id="password" name="password-input" placeholder="Your password" required>
+        <label for="email-input">Email Address</label>
+        <input type="email" id="email" name="email-input" placeholder="Your email address" required>
+        <label for="address-input">Address</label>
+        <input type="text" id="address" name="address-input" placeholder="Your address" required>
+        <label for="dob-input">Date Of Birth</label>
+        <input type="date" id="dob" name="dob-input" placeholder="Your date of birth" required>
+        <label for="pps-input">PPS Number</label>
+        <input type="text" id="pps" name="pps-input" placeholder="Your PPS number" required>
+        <label for="phone-input">Phone Number</label>
+        <input type="text" id="phone" name="phone-input" placeholder="Your phone number" required>
+        <button type="submit">Sign Up</button>
+      </form>
+      <script>
+        let myform = document.getElementById("signup-form"); // get the form
+
+        async function register(uname, pass, email, name, dob, pps, phone, address) {
+            const rawResponse = await fetch("http://127.0.0.1:8000/register/", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            mode: 'cors',
+            body: JSON.stringify({username: uname,
+                                password: pass,
+                                email: email,
+                                name: name,
+                                phone_number: phone,
+                                pps_number: pps,
+                                dob: dob,
+                                address: address}
+                                )
+            });
+            if(rawResponse.status >= 200 && rawResponse.status <= 299) {
+                window.location.href = "/login";
+                alert('Account Created. You can now log in.');
+            } else {
+                alert("User already exists. Please re-enter credentials.");
+            }
+        } 
+
+        // User submits sign up details
+        myform.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let name = document.getElementById("name").value;
+            let uname = document.getElementById("username").value;
+            let pass = document.getElementById("password").value;
+            let email = document.getElementById("email").value;
+            let dob = document.getElementById("dob").value;
+            let pps = document.getElementById("pps").value;
+            let phone = document.getElementById("phone").value;
+            let address = document.getElementById("address").value;
+
+                
+
+            if (uname && pass && email && name && parseInt(phone) && pps && dob && address) {
+                register(uname, pass, email, name, dob, pps, phone, address)
+            } else {
+                // If fields are empty, an alert prompts the user to fill them.
+                if(username == '') {
+                    alert('Please enter username');
+                }
+                if(password == '') {
+                    alert('Please enter password');
+                }
+                if(email == '') {
+                    alert('Please enter email');
+                }
+                if(name == '') {
+                    alert('Please enter full name');
+                }
+                if(pps == '') {
+                    alert('Please enter PPS number');
+                }
+                if(dob == '') {
+                    alert('Please enter date of birth');
+                }
+                if(address == '') {
+                    alert('Please enter address');
+                }
+                if(phone == '' || !parseInt(phone)) {
+                    alert('Please enter valid phone number');
+                }
+            }
+        });
+        
+      </script>
+  </body>
+</html>
