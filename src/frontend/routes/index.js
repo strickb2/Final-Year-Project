@@ -14,4 +14,8 @@ router.get('/stock', function(req, res, next){
   res.render('stock', { title: 'StockCompete | Stock' })
 });
 
+router.get('/signup', function(req, res, next){
+  res.render('signup', { title: 'StockCompete | Sign Up' })
+});
+
 module.exports = router;
