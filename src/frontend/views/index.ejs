@@ -1,18 +1,122 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
+  <%- include('partials/head'); -%>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <!-- Navbar -->
+    <%- include('partials/nav'); -%>
 
+    <div class="container">
+      <div class="row">
+        <div class="col-8">
+          <!-- Stock Search Bar -->
+          <section id="stockSearchBar">
+            <form class="form-inline" style="width:100%">
+              <input class="form-control mr-lg-3" placeholder="Search" id="searchStocksInput">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="searchStocks()">Search</button>
+            </form>
+          </section>  
+        
+          <!-- List of stocks retrieved from backend -->
+          <section id="listStock"></section>
+
+          <!-- News on stock market -->
+          <section id="listNews"></section>
+        </div>
+        <div class="col-4">
+        </div>
+      </div>
+
+      <!-- Footer (imported) -->
+    </div>
+
+    <!-- Javascript Section -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
     <script>
-      let req = "http://127.0.0.1:8000/stocks/general/"
-      fetch(req) // make a request to this endpoint
+
+      // ------------ Populate page with a list of stocks ------------
+
+      // Stock listing
+      let reqlistStocks = "http://127.0.0.1:8000/stocks/general/";
+      fetch(reqlistStocks) // make a request to this endpoint
 				.then(response => response.json()) // with our response, get the json data returned
-				.then(data => console.log(data)); // print the json data
+				.then(data => containerListStocks(data)); // send the json data
+
+      async function containerListStocks(oData) {
+        let containerListStocks = document.getElementById("listStock");
+        containerListStocks.innerHTML = "";
+        for (idStock in oData) {
+          let oStock = oData[idStock];
+          let sTicker = oStock.ticker;
+          let iCurrentStockValue = await getCurrentStockValue(sTicker);
+          let elStock = document.createElement("div");
+          elStock.className = "card";
+          elStock.style = "width: 17rem;";
+          elStock.innerHTML = "<img class='card-img-top' src="  + oStock.logo +  " alt= '"+ oStock.name + " Logo Image' style='height: 5rem'> \
+            <div class='card-body'> \
+              <div class='row'> \
+                <div class='col'> \
+                  <p class='card-text'>" + oStock.name + "</p> \
+                </div> \
+                <div class='col'> \
+                  <div class='card bg-primary text-white text-center'> €" + iCurrentStockValue[sTicker]['c'] + " " + iCurrentStockValue[sTicker]['dp'] + "%</p> \
+                </div> \
+              </div> \
+            </div>";
+            containerListStocks.appendChild(elStock);
+        };
+      };
+
+      async function getCurrentStockValue(sTicker) {
+        let url = "http://127.0.0.1:8000/api/finnhub/currentvalue/?ticker=" + sTicker;
+        let response = await fetch(url);
+        let data = await response.json();
+        return data;
+      }
+
+      // News listing
+      let reqlistNews = "http://127.0.0.1:8000/api/googlenews/articles/?query=StockMarket"
+      fetch(reqlistNews) // make a request to this endpoint
+				.then(response => response.json()) // with our response, get the json data returned
+				.then(data => containerListNews(data)); // send the json data
+
+      function containerListNews(oData) {
+        let containerListNews = document.getElementById("listNews");
+        if (oData['status'] === "ok") {
+          oData = oData.articles;
+          for (idArticle in oData) {
+            let oArticle = oData[idArticle];
+            let elArticle = document.createElement("div");
+            elArticle.className = "row";
+            elArticle.innerHTML = oArticle.source.name + ": " + oArticle.title + "";
+            containerListNews.appendChild(elArticle);
+          };
+        };
+      };
+      // ------------ End of init() section ------------
+
+      // ------------ eventHandlers() ------------ 
+      
+      // Handle input when user presses enter instead of clicking button
+      let elSearchInput = document.getElementById("searchStocksInput")
+      elSearchInput.addEventListener("keydown", function(e){
+        if (e.keyCode === 13) {
+          e.stopImmediatePropagation()
+          e.preventDefault()
+          searchStocks();
+        }
+      })
+
+      // Retrieve stock list based on user input
+      function searchStocks() {
+        let elSearchValue = document.getElementById("searchStocksInput").value;
+        let req = "http://127.0.0.1:8000/stocks/general/?search=" + elSearchValue;
+        fetch(req)
+          .then(response => response.json())
+          .then(data => containerListStocks(data));
+      }
     </script>
   </body>
 </html>
