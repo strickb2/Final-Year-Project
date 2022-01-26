@@ -68,9 +68,6 @@ class StockBalance(models.Model):
     def average_value(self):
         return round(self.total_purchase_value/self.quantity, 2)
 
-# -------------- Todo --------------
-
-# Leaderboard Model
 class Leaderboard(models.Model):
     id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(APIUser, on_delete=models.CASCADE)
@@ -79,7 +76,6 @@ class Leaderboard(models.Model):
     def __str__(self):
         return self.user_id.name + " | " + str(self.points)
 
-# Points Model
 class Point(models.Model):
     id = models.AutoField(primary_key=True)
     trans_type = models.ForeignKey(TransactionType, on_delete=models.CASCADE)

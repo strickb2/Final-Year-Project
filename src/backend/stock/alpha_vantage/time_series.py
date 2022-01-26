@@ -29,9 +29,11 @@ class TimeSeries:
         result = {}
         for time_period in data:
             if time_period == "day":
+                # Check not 'Error Message'
                 result[time_period] = {}
                 time_period_data = data[time_period]['Time Series (Daily)'] # Gets the list of day instances
             if time_period == "month":
+                # Check not 'Error Message'
                 result[time_period] = {}
                 time_period_data = data[time_period]['Monthly Time Series'] # Gets the list of month instances
             # else:
