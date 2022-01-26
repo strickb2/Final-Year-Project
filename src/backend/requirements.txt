@@ -5,3 +5,4 @@ django-filter
 requests
 Pillow
 django-cors-headers
+djangorestframework-simplejwt
