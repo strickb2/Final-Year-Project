@@ -1,29 +1,123 @@
 <!DOCTYPE html>
-  <head>
-    <title>Sign Up Page</title>
-  </head>
+  <%- include('partials/head'); -%>
   <body>
-      <h1>Sign Up</h1>
-      <form id="signup-form">
-        <label for="name-input">Full Name</label>
-        <input type="text" id="name" name="name-input" placeholder="Your full name" required>
-        <label for="username-input">Username</label>
-        <input type="text" name="username-input" id="username" placeholder="Your username" required>
-        <label for="password-input">Password</label>
-        <input type="password" id="password" name="password-input" placeholder="Your password" required>
-        <label for="email-input">Email Address</label>
-        <input type="email" id="email" name="email-input" placeholder="Your email address" required>
-        <label for="address-input">Address</label>
-        <input type="text" id="address" name="address-input" placeholder="Your address" required>
-        <label for="dob-input">Date Of Birth</label>
-        <input type="date" id="dob" name="dob-input" placeholder="Your date of birth" required>
-        <label for="pps-input">PPS Number</label>
-        <input type="text" id="pps" name="pps-input" placeholder="Your PPS number" required>
-        <label for="phone-input">Phone Number</label>
-        <input type="text" id="phone" name="phone-input" placeholder="Your phone number" required>
-        <button type="submit">Sign Up</button>
-      </form>
-      <script>
+    <!-- Navbar -->
+    <%- include('partials/nav'); -%>
+    <div class="container">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6 py-lg-5">
+                <!-- Sign Up Form -->
+                <div class="card bg-primary p-4">
+                    <div class="card-title text-center pb-2 text-white">
+                        <!-- Sign Up Title -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="70" height="80" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
+                            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                        </svg>
+                        <h1 class="fw-light">Sign Up</h1>
+                    <div>
+                    <div class="card-body pt-1">                       
+                        <form id="signup-form">
+                            <!-- Username -->                                    
+                            <div class="input-group mb-3">
+                                <span class="input-group-text text-primary" id="username-icon">
+                                    <svg xmlns='http://www.w3.org/2000/svg' width='19' height='19' fill='currentColor' class='bi bi-person-circle' viewBox='0 0 16 16'>
+                                        <path d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'/>
+                                        <path fill-rule='evenodd' d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z'/>
+                                    </svg>
+                                </span>
+                                <input id="username" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="username-icon" required>
+                            </div>
+
+                            <!-- Full Name -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text text-primary" id="fullname-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                                    </svg>
+                                </span>
+                                <input id="name" type="text" placeholder="Full Name" class="form-control" aria-label="Full Name" aria-describedby="fullname-icon" required>
+                            </div>
+
+                            <!-- Email -->                                   
+                            <div class="input-group mb-3">
+                                <span class="input-group-text text-primary" id="email-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                                    </svg>
+                                </span>
+                                <input type="email" id="email" placeholder="Email" class="form-control" aria-label="Email" aria-describedby="email-icon" required>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text text-primary" id="password-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
+                                        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
+                                    </svg>
+                                </span>
+                                <input id="password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-icon" required>
+                            </div>
+
+                            <!-- Date Of Birth -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text text-primary" id="dob-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                    </svg>
+                                </span>
+                                <input type="date" id="dob" class="form-control" placeholder="Date Of Birth" aria-label="Date Of Birth" aria-describedby="dob-icon" required>
+                            </div>
+
+                            <!-- PPS Number -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text text-primary" id="dob-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-person-video2" viewBox="0 0 16 16">
+                                        <path d="M10 9.05a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                                        <path d="M2 1a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2ZM1 3a1 1 0 0 1 1-1h2v2H1V3Zm4 10V2h9a1 1 0 0 1 1 1v9c0 .285-.12.543-.31.725C14.15 11.494 12.822 10 10 10c-3.037 0-4.345 1.73-4.798 3H5Zm-4-2h3v2H2a1 1 0 0 1-1-1v-1Zm3-1H1V8h3v2Zm0-3H1V5h3v2Z"/>
+                                    </svg>
+                                </span>
+                                <input type="text" id="pps" class="form-control" placeholder="PPS Number" aria-label="PPS Number" aria-describedby="pps-icon" required>
+                            </div>
+
+                            <!-- Address -->                                  
+                            <div class="input-group mb-3">
+                                <span class="input-group-text text-primary" id="address-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                                        <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                                    </svg>
+                                </span>
+                                <input type="text" id="address" placeholder="Address" class="form-control" aria-label="Address" aria-describedby="address-icon" required>
+                            </div>
+
+                            <!-- Phone Number -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text text-primary" id="phone   -icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+                                        <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                                    </svg>
+                                </span>
+                                <input id="phone" type="text" placeholder="Phone" class="form-control" aria-label="Phone" aria-describedby="phone-icon" required>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="form-outline mb-4">
+                                <button class="btn btn-lg btn-success btn-block" style="width:100%" type="submit">Sign Up</button>
+                            </div>
+                            <hr>
+                            <!-- No Account / Signup-->
+                            <div class="form-outline mb-4">
+                                <h5>Already have an account? <a class="text-white" href="/login"><strong><u>Login</u></strong></a></h5>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
         let myform = document.getElementById("signup-form"); // get the form
 
         async function register(uname, pass, email, name, dob, pps, phone, address) {
@@ -35,13 +129,13 @@
             },
             mode: 'cors',
             body: JSON.stringify({username: uname,
-                                password: pass,
-                                email: email,
                                 name: name,
-                                phone_number: phone,
-                                pps_number: pps,
+                                email: email,
+                                password: pass,
                                 dob: dob,
-                                address: address}
+                                pps_number: pps,
+                                address: address,
+                                phone_number: phone}
                                 )
             });
             if(rawResponse.status >= 200 && rawResponse.status <= 299) {
@@ -55,38 +149,36 @@
         // User submits sign up details
         myform.addEventListener('submit', function(e) {
             e.preventDefault();
-            let name = document.getElementById("name").value;
             let uname = document.getElementById("username").value;
-            let pass = document.getElementById("password").value;
+            let name = document.getElementById("name").value;
             let email = document.getElementById("email").value;
+            let pass = document.getElementById("password").value;
             let dob = document.getElementById("dob").value;
             let pps = document.getElementById("pps").value;
-            let phone = document.getElementById("phone").value;
             let address = document.getElementById("address").value;
+            let phone = document.getElementById("phone").value;
 
-                
-
-            if (uname && pass && email && name && parseInt(phone) && pps && dob && address) {
+            if (uname && name && email && pass && dob && pps && address && parseInt(phone)) {
                 register(uname, pass, email, name, dob, pps, phone, address)
             } else {
                 // If fields are empty, an alert prompts the user to fill them.
                 if(username == '') {
                     alert('Please enter username');
                 }
-                if(password == '') {
-                    alert('Please enter password');
+                if(name == '') {
+                    alert('Please enter full name');
                 }
                 if(email == '') {
                     alert('Please enter email');
                 }
-                if(name == '') {
-                    alert('Please enter full name');
-                }
-                if(pps == '') {
-                    alert('Please enter PPS number');
+                if(password == '') {
+                    alert('Please enter password');
                 }
                 if(dob == '') {
                     alert('Please enter date of birth');
+                }
+                if(pps == '') {
+                    alert('Please enter PPS number');
                 }
                 if(address == '') {
                     alert('Please enter address');

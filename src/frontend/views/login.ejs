@@ -1,48 +1,95 @@
 <!DOCTYPE html>
-  <head>
-    <title>Login Page</title>
-  </head>
+  <%- include('partials/head'); -%>
   <body>
-      <h1>Login</h1>
-      <form id="login-form">
-          <label for="username-input">Username</label>
-          <input type="text" name="username-input" id="username" placeholder="Your username" required>
-          <label for="password-input">Password</label>
-          <input type="password" id="password" name="password-input" placeholder="Your password" required>
-          <button type="submit">Login</button>
-      </form>
-      <script>
-        let myform = document.getElementById("login-form"); // get the form
-            // User submits login details
-            myform.addEventListener('submit', function(e) {
-                e.preventDefault();
-                let uname = document.getElementById("username").value;
-                let pass = document.getElementById("password").value;
+    <!-- Navbar -->
+    <%- include('partials/nav'); -%>
+    <div class="container">
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6 py-lg-5">
+          <!-- Sign Up Form -->
+          <div class="card bg-primary p-4">
+            <div class="card-title text-center pb-2 text-white">
+              <!-- Login Title -->
+              <div class="text-center pb-2">
+                <svg xmlns='http://www.w3.org/2000/svg' width='70' height='80' fill='currentColor' class='bi bi-person-circle' viewBox='0 0 16 16'>
+                    <path d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'/>
+                    <path fill-rule='evenodd' d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z'/>
+                </svg>
+                <h1 class="fw-light">Login</h1>
+              </div>
+            </div>
+            <div class="card-body pt-1">
+              <form id="login-form">
+                <!-- Username -->                                    
+                <div class="input-group mb-3">
+                    <span class="input-group-text text-primary" id="username-icon">
+                        <svg xmlns='http://www.w3.org/2000/svg' width='19' height='19' fill='currentColor' class='bi bi-person-circle' viewBox='0 0 16 16'>
+                            <path d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'/>
+                            <path fill-rule='evenodd' d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z'/>
+                        </svg>
+                    </span>
+                    <input id="username" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="username-icon">
+                </div>
 
-                fetch("http://127.0.0.1:8000/api/token/", {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({username: uname, password: pass})
-                })
-                .then(response=>response.json())
-                    .then(data=>{
-                        console.log(data);
-                        if('access' in data){
-                            let accessToken = data['access'];
-                            let refreshToken = data['refresh'];
-                            localStorage.setItem("access", accessToken);
-                            localStorage.setItem("refresh", refreshToken);
-                            window.location.href = "/";
-                        }
-                        else {
-                            alert("Username or Password invalid.");
-                        }
-                    });
-            });
+                <!-- Password -->
+                <div class="input-group mb-3">
+                  <span class="input-group-text text-primary" id="password-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
+                          <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
+                      </svg>
+                  </span>
+                  <input id="password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-icon">
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-outline mb-4">
+                  <button class="btn btn-lg btn-success btn-block" style="width:100%" type="submit">Login</button>
+                </div>
+                <hr>
+                <!-- No Account / Signup-->
+                <div class="form-outline mb-4 text-center">
+                  <h5 class="text-white">Don't have an account? <a class="text-white" href="/signup"><strong><u>Sign Up</u></strong></a></h5>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let myform = document.getElementById("login-form"); // get the form
+      // User submits login details
+      myform.addEventListener('submit', function(e) {
+          e.preventDefault();
+          let uname = document.getElementById("username").value;
+          let pass = document.getElementById("password").value;
+
+          fetch("http://127.0.0.1:8000/api/token/", {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({username: uname, password: pass})
+          })
+          .then(response=>response.json())
+              .then(data=>{
+                  console.log(data);
+                  if('access' in data){
+                      let accessToken = data['access'];
+                      let refreshToken = data['refresh'];
+                      localStorage.setItem("access", accessToken);
+                      localStorage.setItem("refresh", refreshToken);
+                      window.location.href = "/";
+                  }
+                  else {
+                      alert("Username or Password invalid.");
+                  }
+              });
+      });
         
-      </script>
+    </script>
   </body>
 </html>
