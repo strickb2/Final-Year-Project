@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <%- include('partials/head'); -%>
+  <body class="bg-info">
+    <!-- Navbar -->
+    <%- include('partials/nav'); -%>
+    <br>
+    <br>
+    <div class="container">
+      <div class="row pb-1">
+        <div class="col-12 p-1">
+          <!-- Stock General Data -->
+          <section class="pb-1" id="infoStockData"></section>
+        </div>
+      </div>
+      
+      <div class="row pt-0">
+        <div class="col-8 p-1">
+          <!-- Chart: Time Series-->
+          <section class="pb-1" id="chartTimeSeries"></section>
+
+          <!-- News on stock market -->
+          <section class="pt-3" id="listNews"></section>
+
+        </div>
+        <div class="col-4 pt-1 pr-1">
+          <!-- Account Details and Buy/Sell Options -->
+          <section id="transactionBuySell"></section>
+        </div>
+
+      </div>
+    </div>
+
+    <script type="module" src="/javascripts/page/stock.js"></script>
+  </body>
+</html>

@@ -8,7 +8,6 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from .alpha_vantage.time_series import TimeSeries
 from .google_news.article import GoogleNews
 
-
 # ----------------------- Model View Sets ------------------------
 
 class APIUserViewSet(viewsets.ModelViewSet):
@@ -35,6 +34,13 @@ class StockViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny] # No login required
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', 'ticker']
+
+    def get_queryset(self):
+        stock_id = self.request.query_params.get('stock_id')
+        if stock_id is not None:
+            return Stock.objects.filter(id=stock_id)
+        else:
+            return Stock.objects.all()
 
 class TransactionViewSet(viewsets.ModelViewSet):
     '''
@@ -136,6 +142,6 @@ class FinnHubAPIView(APIView):
         response = requests.get(url)
         data = response.json()
         if response.status_code == 200:
-            return Response({ ticker : data})
+            return Response(data)
         else:
             return Response(data)

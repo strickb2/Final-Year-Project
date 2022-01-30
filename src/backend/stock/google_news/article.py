@@ -6,9 +6,22 @@ class GoogleNews:
         self.query = query
     
     def getArticles(self):
-        return self._get_data(QueryBuilder(self.query).query())
+        titles = []
+        data = self._get_data()
+        if data['status'] == 'ok':
+            i = 0
+            for article in data['articles']:
+                if article['title'] in titles:
+                    del data['articles'][i]
+                else:
+                    titles.append(article['title'])
+                    i+=1
+            return data
+        else:
+            return {'error': 'No News Available at this time'}
 
-    def _get_data(self, url):
+    def _get_data(self):
+        url = QueryBuilder(self.query).query()
         response = requests.get(url)
         data = response.json()
         return data

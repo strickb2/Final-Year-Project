@@ -17,7 +17,7 @@ class QueryBuilder:
     
     # Construct URL with vars
     def _joiner(self):
-        from_date = "&from=" + str((date.today() - timedelta(days=1)).strftime('%Y-%m-%d')) # Oldest date to get article
+        from_date = "&from=" + str((date.today() - timedelta(days=2)).strftime('%Y-%m-%d')) # Oldest date to get article
         sort_by = "&sortby=relevancy"
         language = "&language=en"
         page_size = "&pageSize=5"
