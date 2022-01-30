@@ -18,4 +18,16 @@ router.get('/signup', function(req, res, next){
   res.render('signup', { title: 'StockCompete | Sign Up' })
 });
 
+router.get('/account/dashboard', function(req, res, next){
+  res.render('accountDashboard', { title: 'StockCompete | Account Dashboard' })
+});
+
+router.get('/account/details', function(req, res, next){
+  res.render('accountDetails', { title: 'StockCompete | Account Details' })
+});
+
+router.get('/account/transactions', function(req, res, next){
+  res.render('accountTransactions', { title: 'StockCompete | Account Transactions' })
+});
+
 module.exports = router;
