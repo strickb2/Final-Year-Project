@@ -1,4 +1,4 @@
-import requests
+from .finnhub.current_value import CurrentValue
 from rest_framework import viewsets, generics, filters
 from .models import *
 from .serializers import *
@@ -67,10 +67,14 @@ class StockBalanceViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
+        stock_id = self.request.query_params.get('stock_id')
         if user.is_superuser:
             return StockBalance.objects.all()
         else:
-            return StockBalance.objects.filter(user_id=user.id)
+            if stock_id:
+                return StockBalance.objects.filter(user_id=user.id, stock_id=stock_id)
+            else:
+                return StockBalance.objects.filter(user_id=user.id)
 
 class LeaderboardViewSet(viewsets.ModelViewSet):
     '''
@@ -138,10 +142,5 @@ class FinnHubAPIView(APIView):
 
     def get(self, request, format=None):
         ticker = request.query_params['ticker']
-        url = "https://finnhub.io/api/v1/quote?symbol=" + ticker + "&token=c7nf1t2ad3ifj5l0ckug"
-        response = requests.get(url)
-        data = response.json()
-        if response.status_code == 200:
-            return Response(data)
-        else:
-            return Response(data)
+        data = CurrentValue(ticker).get_values()
+        return Response(data)

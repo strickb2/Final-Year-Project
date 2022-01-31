@@ -1,6 +1,7 @@
-import { getStockData, getCurrentStockValue, getCurrentUser, getNewsArticles } from '../data/fetchData.js' // getTimeSeries
+import { getStockData, getCurrentStockValue, getTimeSeries, getCurrentUser, getStockBalance, getNewsArticles } from '../data/fetchData.js'
 import { displayContainerStock } from '../containers/containerStock.js'
 import { displayContainerListNews } from '../containers/ContainerListNews.js'
+import { displayContainerStockTransaction } from '../containers/containerStockTransaction.js';
 
 
 function init() {
@@ -16,16 +17,20 @@ function init() {
         const oStockCurrentPromise = getCurrentStockValue(oStock.ticker);
         oStockCurrentPromise.then(oStockCurrent => {
             displayContainerStock(oStock, oStockCurrent);
-        });
-       
-        // Get time series data and display graphs
-        // getTimeSeries(oDataStock.ticker).then(displayContainerTimeSeries);
+            
+            // Get time series data and display graphs
+            console.log(getTimeSeries(oStock.ticker)) // .then(displayContainerTimeSeries);
 
-        // Get Account and Stock Balance Details and display transaction options
-        console.log(getCurrentUser());
+            // Get Account and Check if Stock Balance Available
+            getCurrentUser().then(oUser => {
+                getStockBalance(stockId).then(oStockBalance => {
+                    displayContainerStockTransaction(oUser, oStock, oStockBalance, oStockCurrent);
+                })
+            });
+        });
 
         // Get news articles and display news articles containers
-        getNewsArticles(oStock.ticker + " Stock").then(displayContainerListNews);
+        // getNewsArticles(oStock.ticker + " Stock").then(displayContainerListNews);
     });
 };
 

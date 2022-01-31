@@ -66,7 +66,11 @@ class StockBalance(models.Model):
         return self.user_id.name + " | " + self.stock_id.name + " x " + str(self.quantity) + " | Total Value: €" + str(self.total_purchase_value)
     
     def average_value(self):
-        return round(self.total_purchase_value/self.quantity, 2)
+        if self.quantity > 0:
+            return round(self.total_purchase_value/self.quantity, 2)
+        else:
+            return 0
+        
 
 class Leaderboard(models.Model):
     id = models.AutoField(primary_key=True)

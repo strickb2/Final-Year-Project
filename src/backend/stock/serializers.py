@@ -8,7 +8,7 @@ from decimal import Decimal
 class APIUserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = APIUser
-        fields = ['username', 'name', 'email', 'password', 'dob', 'pps_number', 'address', 'phone_number', 'balance']
+        fields = ['id','username', 'name', 'email', 'password', 'dob', 'pps_number', 'address', 'phone_number', 'balance']
     
     def create(self, validated_data):
         username = validated_data['username']
@@ -161,7 +161,7 @@ class TransactionSerializer(serializers.ModelSerializer):
                     )
 
                     # Update Stock Balance
-                    stock_bal.total_purchase_value -= Decimal(stock_bal.average_value())
+                    stock_bal.total_purchase_value -= Decimal(stock_bal.average_value() * Decimal(stock_transaction.quantity()))
                     stock_bal.quantity -= Decimal(stock_transaction.quantity())
                     stock_bal.save()
                     
