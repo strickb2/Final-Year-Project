@@ -57,6 +57,7 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
         inputBox.setAttribute('type', 'number');
         inputBox.setAttribute('placeholder', "0.00");
         inputBox.setAttribute('max', oUser.balance);
+        inputBox.setAttribute('min', 0.01);
         inputBox.setAttribute('aria-label', 'Buy');
         inputBox.setAttribute('aria-describedby', 'icon-buy');
         inputBox.setAttribute('step', ".01");
@@ -101,12 +102,14 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
         // -------------------------- Stock Balance --------------------------
 
         let elStockBalance = document.createElement("div");
-        if (oStockBalance[0].average_value !== 0) {
-            // If user owns this stock Display their Stock Balance
-            elStockBalance.innerHTML = "<hr><p class='mb-0'>Stock Balance</p> \
-            <h5 class='text-secondary'> €" + oStockBalance[0].total_purchase_value + "</h5> \
-            <p class='mb-0'>Stock Average Purchase Value</p> \
-            <h5 class='text-secondary'> €" + oStockBalance[0].average_value + "</h5>"
+        if (oStockBalance[0]) {
+            if (oStockBalance[0].average_value !== 0) {
+                // If user owns this stock Display their Stock Balance
+                elStockBalance.innerHTML = "<hr><p class='mb-0'>Stock Balance</p> \
+                <h5 class='text-secondary'> €" + oStockBalance[0].total_purchase_value + "</h5> \
+                <p class='mb-0'>Stock Average Purchase Value</p> \
+                <h5 class='text-secondary'> €" + oStockBalance[0].average_value + "</h5>"
+            }
         } else { 
             // If user owns this stock Display their Stock Balance
             elStockBalance.innerHTML = "<hr><p class='mb-0'>Stock Balance</p> \
@@ -144,6 +147,7 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
         inputBox.setAttribute('id', 'Sell');
         inputBox.setAttribute('type', 'number');
         inputBox.setAttribute('placeholder', "0.00");
+        inputBox.setAttribute('min', 0.01);
         inputBox.setAttribute('aria-label', 'Sell');
         inputBox.setAttribute('aria-describedby', 'icon-sell');
         inputBox.setAttribute('step', ".01");
