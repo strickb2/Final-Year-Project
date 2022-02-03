@@ -11,14 +11,15 @@ export function displayContainerListStocks(oData) {
 
         // Create a table header
         let tableHeaderStockList = document.createElement("thead");
-        tableHeaderStockList.className = "table-secondary"
-        tableHeaderStockList.innerHTML = "<tr> \
-            <th scope='col-2' colspan='2' class='text-center'>Stock</th> \
-            <th scope='col-2'>High</th> \
-            <th scope='col-2'>Low</th> \
-            <th scope='col-2'>Current</th> \
-            <th scope='col-1'>Diff (1d)</th> \
-            <th scope='col-1'>Detail</th> \
+        tableHeaderStockList.className = "text-white"
+        tableHeaderStockList.style = "background-color: #34D1BF;"
+        tableHeaderStockList.innerHTML = "<tr class='text-center'> \
+            <th scope='col'>Logo</th> \
+            <th scope='col'>Stock</th> \
+            <th scope='col'>High</th> \
+            <th scope='col'>Low</th> \
+            <th scope='col'>Current</th> \
+            <th scope='col'>Diff (1d)</th> \
             </tr>"
         tableStockList.appendChild(tableHeaderStockList);
 
@@ -26,6 +27,8 @@ export function displayContainerListStocks(oData) {
         let tableBodyStockList = document.createElement("tbody");
         for (let idStock in oData) {
             let rowStockList = document.createElement("tr");
+            rowStockList.style = "transform: rotate(0);"
+            rowStockList.className = "text-center justify-content-center"
             let oStock = oData[idStock];
 
             // Row structure on table is as follows:
@@ -45,7 +48,13 @@ export function displayContainerListStocks(oData) {
             // Fetch stock's current values
             let oCurrentStockValuePromise = getCurrentStockValue(oStock.ticker);
             oCurrentStockValuePromise.then(oCurrentStockValue => {
-                let dataPoints = [oStock.name, oCurrentStockValue['h'], oCurrentStockValue['l'], oCurrentStockValue['c']]
+                let dataPoints = [oCurrentStockValue['h'], oCurrentStockValue['l'], oCurrentStockValue['c']]
+
+                rowItem = document.createElement("th");
+                rowItem.scope = "row"
+                rowItem.innerHTML = "<a href='/stock/?stock_id=" + oStock.id + "' class='stretched-link'>" + oStock.name + "</a>";
+                rowStockList.appendChild(rowItem);
+
                 for (let dataPoint in dataPoints) {
                     rowItem = document.createElement("td");
                     rowItem.innerHTML = dataPoints[dataPoint];
@@ -61,17 +70,7 @@ export function displayContainerListStocks(oData) {
                     rowItem.className = "text-success";
                 }
                 rowStockList.appendChild(rowItem);
-            
-            
-                // Button to redirect to product soecific page
-                rowItem = document.createElement("td");
-                let elButtonDetail = document.createElement("button");
-                elButtonDetail.className = "btn btn-primary text-center";
-                elButtonDetail.innerHTML = "Detail";
-                elButtonDetail.onclick = function() { window.location.href = "/stock/?stock_id=" + oStock.id };
-                rowItem.appendChild(elButtonDetail)
 
-                rowStockList.appendChild(rowItem);
                 tableBodyStockList.appendChild(rowStockList);
             });
         };

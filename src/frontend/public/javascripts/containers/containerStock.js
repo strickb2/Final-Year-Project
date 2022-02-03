@@ -3,6 +3,9 @@ import { getCurrentStockValue } from "../data/fetchData.js";
 let containerStock = document.getElementById('infoStockData');
 
 export function displayContainerStock(oStock, oStockCurrent) {
+    // Clear Container
+    containerStock.innerHTML = "";
+
     // Card with general stock info
     let cardStockInfo = document.createElement("div");
     cardStockInfo.className = "card p-0 shadow ";

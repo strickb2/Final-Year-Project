@@ -1,6 +1,7 @@
 let containerListNews = document.getElementById("listNews");
 
 export function displayContainerListNews(oData) {
+  containerListNews.innerHTML = "";
     let cardListNews = document.createElement("div");
     cardListNews.className = "card shadow";
       
@@ -42,7 +43,7 @@ export function displayContainerListNews(oData) {
         // Article Image left
         let elArticleImage = document.createElement("div");
         elArticleImage.className = "col-3";
-        elArticleImage.innerHTML = "<img class='img-fluid rounded-start' style='height:100%' src='" + oArticle.urlToImage + "'></img>";
+        elArticleImage.innerHTML = "<img class='img-fluid rounded-start' style='height:150px; width:100%'  src='" + oArticle.urlToImage + "'></img>";
         elArticleRow.appendChild(elArticleImage)
 
         // Article Content middle to right
