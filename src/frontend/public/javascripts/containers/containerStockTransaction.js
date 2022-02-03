@@ -1,4 +1,5 @@
 import { createTransaction, getCurrentStockValue, getCurrentUser, getStockBalance } from '../data/fetchData.js'
+import { navBar } from '../partials/nav.js';
 
 const containerStockTransaction = document.getElementById("transactionBuySell");
 
@@ -9,7 +10,7 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
     // Display Account
     let elCardAccount = document.createElement("div");
     elCardAccount.className = "card shadow";
-    elCardAccount.style = "color: #6610f2!important;"
+    elCardAccount.style = "color: #6610f2!important; height:480px;"
 
     let elCardAccountTitle = document.createElement("div");
     elCardAccountTitle.className = "card-header lead";
@@ -92,6 +93,7 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
                             displayContainerStockTransaction(oUser, oStock, oStockBalance, oStockCurrent);
                         })
                     });
+                    navBar();
                     alert("Buy Transaction Successful! Your points have been added to the leaderboard!");
                 });
             };
@@ -103,20 +105,23 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
 
         let elStockBalance = document.createElement("div");
         if (oStockBalance[0]) {
-            if (oStockBalance[0].average_value !== 0) {
-                // If user owns this stock Display their Stock Balance
+            // If user owns this stock Display their Stock Balance and has a total value > 2
+            if (Math.floor(oStockBalance[0].quantity * oStockCurrent['c'] * 100)/100 >= 2) {
                 elStockBalance.innerHTML = "<hr><p class='mb-0'>Stock Balance</p> \
-                <h5 class='text-secondary'> €" + oStockBalance[0].total_purchase_value + "</h5> \
+                <h5 class='text-secondary'> €" + Math.floor(oStockBalance[0].quantity * oStockCurrent['c'] * 100)/100 + "</h5> \
                 <p class='mb-0'>Stock Average Purchase Value</p> \
                 <h5 class='text-secondary'> €" + oStockBalance[0].average_value + "</h5>"
+            } else {
+                // Due to maths logic error at low decimal don't include avg value
+                elStockBalance.innerHTML = "<hr><p class='mb-0'>Stock Balance</p> \
+                <h5 class='text-secondary'> €" + Math.floor(oStockBalance[0].quantity * oStockCurrent['c'] * 100)/100 + "</h5> \
+                <p class='mb-0'>Stock Average Purchase Value</p> \
+                <h5 class='text-secondary'> Cannot Calculate</h5>"
             }
         } else { 
             // If user owns this stock Display their Stock Balance
             elStockBalance.innerHTML = "<hr><p class='mb-0'>Stock Balance</p> \
             <h5 class='text-secondary'>No Stock Balance</h5>";
-            
-            // Disable Sell Button
-
         };
         elCardAccountBody.appendChild(elStockBalance);
 
@@ -147,13 +152,13 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
         inputBox.setAttribute('id', 'Sell');
         inputBox.setAttribute('type', 'number');
         inputBox.setAttribute('placeholder', "0.00");
-        inputBox.setAttribute('min', 0.01);
+        inputBox.setAttribute('min', 2.00);
         inputBox.setAttribute('aria-label', 'Sell');
         inputBox.setAttribute('aria-describedby', 'icon-sell');
         inputBox.setAttribute('step', ".01");
         inputSell.appendChild(inputBox);
         
-        if (oStockBalance.length > 0) {
+        if (oStockBalance[0] && oStockBalance[0].total_purchase_value >= 1) {
             inputBox.setAttribute('max', oStockBalance[0].total_purchase_value);
         } else {
             // Display disabled buy button with message
@@ -184,6 +189,7 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
                             displayContainerStockTransaction(oUser, oStock, oStockBalance, oStockCurrent);
                         })
                     });
+                    navBar();
                     alert("Sell Transaction Successful! Your points have been added to the leaderboard!");
                 });
             };
