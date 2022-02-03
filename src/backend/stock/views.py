@@ -81,15 +81,9 @@ class LeaderboardViewSet(viewsets.ModelViewSet):
     API Endpoint: List of top 20 users and current users position
     '''
     queryset = Leaderboard.objects.all()
-    serilizer_class = LeaderboardSerializer
-    permission_classes = [IsAuthenticated]
+    serializer_class = LeaderboardSerializer
+    permission_classes = [AllowAny]
 
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_superuser:
-            return StockBalance.objects.all()
-        else:
-            return {'leaderboard' : StockBalance.objects.all(), 'user': StockBalance.objects.filter(user_id=user.id)}
 # --------------------- Create Model Objects ---------------------
 
 # Create user object

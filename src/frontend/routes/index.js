@@ -18,16 +18,20 @@ router.get('/signup', function(req, res, next){
   res.render('signup', { title: 'StockCompete | Sign Up' })
 });
 
+router.get('/leaderboard', function(req, res, next){
+  res.render('leaderboard', { title: 'StockCompete | Leaderboard' })
+});
+
 router.get('/account/dashboard', function(req, res, next){
-  res.render('accountDashboard', { title: 'StockCompete | Account Dashboard' })
+  res.render('accountDashboard', { title: 'StockCompete | Dashboard' })
 });
 
 router.get('/account/details', function(req, res, next){
-  res.render('accountDetails', { title: 'StockCompete | Account Details' })
+  res.render('accountDetails', { title: 'StockCompete | Details' })
 });
 
 router.get('/account/transactions', function(req, res, next){
-  res.render('accountTransactions', { title: 'StockCompete | Account Transactions' })
+  res.render('accountTransactions', { title: 'StockCompete | Transactions' })
 });
 
 module.exports = router;

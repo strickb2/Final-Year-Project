@@ -12,7 +12,7 @@ router.register(r'users', views.APIUserViewSet)
 router.register(r'user/stockbalance', views.StockBalanceViewSet)
 router.register(r'stocks/general', views.StockViewSet)
 router.register(r'transactions/all', views.TransactionViewSet, basename="AllTransactions")
-router.register(r'leaderboard', views.TransactionViewSet)
+router.register(r'leaderboard', views.LeaderboardViewSet)
 
 urlpatterns = [
     path('',include(router.urls)),

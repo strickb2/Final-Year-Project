@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import *
 from decimal import Decimal
+import math
 
 # -------------------- Model ViewSet Serializers --------------------
 
@@ -32,8 +33,8 @@ class APIUserSerializer(serializers.HyperlinkedModelSerializer):
         new_user.save()
 
         # Todo: Create new Leaderboard position for user
-        #       new_leaderboard = Leaderboard.objects.create(user_id = new_user)
-        #       new_leaderboard.save()
+        new_leaderboard = Leaderboard.objects.create(user_id = new_user)
+        new_leaderboard.save()
 
         return new_user
 
@@ -47,9 +48,9 @@ class StockSerializer(serializers.ModelSerializer):
 class LeaderboardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Leaderboard
-        fields = ['user_id', 'points']
+        fields = ['id', 'user_id', 'points']
 
-# Leaderboard Serializer
+# Points Serializer
 class PointSerializer(serializers.ModelSerializer):
     class Meta:
         model = Point

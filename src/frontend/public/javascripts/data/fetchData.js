@@ -78,6 +78,10 @@ export function getCurrentStockValue(sTicker) {
     return fetchData("http://127.0.0.1:8000/api/finnhub/currentvalue/?ticker=" + sTicker);
 };
 
+export function getLeaderboard() {
+    return fetchData("http://127.0.0.1:8000/leaderboard/")
+}
+
 // Google news articles for given query
 export function getNewsArticles(query) {
     return fetchData("http://127.0.0.1:8000/api/googlenews/articles/?query=" + query);
