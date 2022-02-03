@@ -56,8 +56,12 @@
           </div>
         </div>
       </div>
+      <%- include('partials/footer'); -%>
     </div>
-
+    <script type="module">
+      import { navBar } from '/javascripts/partials/nav.js'; 
+      navBar()
+  </script>
     <script>
       let myform = document.getElementById("login-form"); // get the form
       // User submits login details

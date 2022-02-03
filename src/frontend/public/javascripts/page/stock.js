@@ -2,9 +2,11 @@ import { getStockData, getCurrentStockValue, getTimeSeries, getCurrentUser, getS
 import { displayContainerStock } from '../containers/containerStock.js'
 import { displayContainerListNews } from '../containers/ContainerListNews.js'
 import { displayContainerStockTransaction } from '../containers/containerStockTransaction.js';
-
+import { displayContainerStockGraph } from '../containers/containerStockGraph.js'
+import { navBar } from '../partials/nav.js'
 
 function init() {
+    navBar();
     // Get URL Param
     const queryString = window.location.search 
     const urlParams = new URLSearchParams(queryString); // Variable initalized to add query parameter to URL
@@ -19,7 +21,7 @@ function init() {
             displayContainerStock(oStock, oStockCurrent);
             
             // Get time series data and display graphs
-            console.log(getTimeSeries(oStock.ticker)) // .then(displayContainerTimeSeries);
+            getTimeSeries(oStock.ticker).then(oTimeSeries => {displayContainerStockGraph(oTimeSeries)});
 
             // Get Account and Check if Stock Balance Available
             getCurrentUser().then(oUser => {
@@ -30,7 +32,7 @@ function init() {
         });
 
         // Get news articles and display news articles containers
-        // getNewsArticles(oStock.ticker + " Stock").then(displayContainerListNews);
+        getNewsArticles(oStock.ticker + " Stock").then(displayContainerListNews);
     });
 };
 
