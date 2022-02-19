@@ -32,28 +32,22 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     Invested</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                <div id="ContainerInvested"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Total Earned Card (Demo) -->
+            <!-- Companies Invested Card -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card shadow h-100 py-2" style="border-left: .25rem solid #ffc107!important;">
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Companies Invested
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">50%</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                <div id="ContainerQuantity"></div>
                             </div>
                         </div>
                     </div>
@@ -67,11 +61,8 @@
                         <div class="row align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    Pending Requests</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                    Leaderboard Points</div>
+                                <div id="ContainerLeaderboard"></div>
                             </div>
                         </div>
                     </div>
@@ -79,23 +70,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xl-8 col-lg-7">
+            <div class="col">
                 <div class="card shadow mb-4">
-                    <!-- Card Header - Dropdown -->
+                    <!-- Card Header -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-primary text-center">Your Stocks</h6>
-                        <div class="dropdown no-arrow">
-                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                                <div class="dropdown-header">Dropdown Header:</div>
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </div>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
@@ -105,43 +84,18 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="card text-center">
-                    <div class="card-header text-white bg-primary mb-3">
-                        Add Funds
-                    </div>
-                    <div class="card-body" style="width: 18rem;">
-                        <form id="AddFunds">
-                            <input id="Add" class="form-control" type="number" style="width:100%" placeholder="0.00" max=10000.00 min=1.00 step="1.00">
-                            <br>
-                            <button class="btn btn-primary text-center" style="width:100%" type="button" onclick="addBalance()">Add</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card text-center">
-                    <div class="card-header text-white bg-primary mb-3">
-                        Withdraw Funds
-                    </div>
-                    <div class="card-body" style="width: 18rem;">
-                        <form id="WithdrawFunds">
-                            <input id="Withdraw" class="form-control" type="number" style="width:100%" placeholder="0.00" max=10000.00 min=1.00 step="1.00">
-                            <br>
-                            <button class="btn btn-primary text-center" style="width:100%" type="button" onclick="withdrawBalance()">Withdraw</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- Buy + Sell Buttons -->
         <!-- Stock Table (name, value, %diff per row) -->
-        <div id="ContainerTable"></div>
+        <br><div id="ContainerTable"></div>
 
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script defer type="module">
-            import { createTransaction } from "/javascripts/data/fetchData.js"
+            import { createTransaction, getLeaderboard, getCurrentUser } from "/javascripts/data/fetchData.js"
+            import { navBar } from "/javascripts/partials/nav.js"
 
             const containerBalance = document.getElementById("AddFunds");
             // Fetch User Table (Total Investment, Current Value) (under graph)
@@ -235,55 +189,6 @@
                 };
             };
 
-            // Add User Balance
-            async function addBalance() {
-                let userPromise = getUserBalance();
-                userPromise.then(oUser => {
-                    if (oUser) {
-                        let data = {
-                            'user': oUser.id,
-                            'type': 4,
-                            'total': document.getElementById("Add").value
-                        };
-                        let bResponse = createTransaction(data);
-                        if (bResponse) {
-                            alert("Funds have been added to your account.");
-                            displayBalance();
-                        };
-                    }
-                })
-            }
-
-            // Withdraw User Balance
-            async function withdrawBalance() {
-                let userPromise = getUserBalance();
-                userPromise.then(oUser => {
-                    if (oUser) {
-                        let data = {
-                            'user': oUser.id,
-                            'type': 2,
-                            'total': document.getElementById("Withdraw").value
-                        };
-                        let bResponse = createTransaction(data);
-                        if (bResponse) {
-                            alert("Funds have been withdrawn from your account.");
-                            displayBalance();
-                        };
-                    }
-                })
-            }
-
-            window.addBalance = addBalance;
-            window.withdrawBalance = withdrawBalance;
-
-            containerBalance.addEventListener("keydown", function(e) {
-                if(e.keyCode === 13) {
-                    e.stopImmediatePropagation();
-                    e.preventDefault();
-                    addBalance();
-                }
-            })
-
             // Display User Balance
             async function displayBalance() {
                 const containerBalance = document.getElementById("ContainerBalance");
@@ -299,7 +204,72 @@
                 })
             }
             
-            async function init() {       
+
+            // Display User Invested
+            async function displayInvested() {
+                const containerInvested = document.getElementById("ContainerInvested");
+                containerInvested.innerHTML = "";
+                let temp;
+                let oPromise = getUserStocks();
+                let elInvested = document.createElement('h5');
+                elInvested.className = "h5 mb-0 font-weight-bold text-gray-800";
+                oPromise.then(oUserStocks => {
+                    if (oUserStocks) {
+                        for (let i=0; i < oUserStocks.length; i++) {
+                            let oUserStock = oUserStocks[i];
+                            temp = oUserStock.total_purchase_value;
+                        }
+                        elInvested.innerHTML = "€" + temp;
+                        containerInvested.appendChild(elInvested);
+                    }
+                })
+            }
+
+            // Display User Companies Invested
+            async function displayCompanies() {
+                const containerQuantity = document.getElementById("ContainerQuantity");
+                containerQuantity.innerHTML = "";
+                let temp = 0;
+                let oPromise = getUserStocks();
+                let elQuantity = document.createElement('h5');
+                elQuantity.className = "h5 mb-0 font-weight-bold text-gray-800";
+                oPromise.then(oUserStocks => {
+                    if (oUserStocks) {
+                        for (let i=0; i < oUserStocks.length; i++) {
+                            let oUserStock = oUserStocks[i];
+                            temp += 1;
+                        }
+                        elQuantity.innerHTML = temp;
+                        containerQuantity.appendChild(elQuantity);
+                    }
+                })
+            }
+
+            // Display User Leaderboard
+            async function displayLeaderboard() {
+                const containerLeaderboard = document.getElementById("ContainerLeaderboard");
+                containerLeaderboard.innerHTML = "";
+                let oUserPromise = getCurrentUser();
+                oUserPromise.then(oUser => {
+                    let elLeaderboard = document.createElement('h5');
+                    elLeaderboard.className = "h5 mb-0 font-weight-bold text-gray-800";
+                    let oLeaderboardPromise = getLeaderboard();
+                    // Get Leaderboard
+                    oLeaderboardPromise.then(oLeaderboard => {
+                        // For user in leaderboard
+                        for (let sId in oLeaderboard) {
+                            // If user is current user
+                            if (oLeaderboard[sId].user_id === oUser.id) {
+                                elLeaderboard.innerHTML = oLeaderboard[sId].points;
+                            }
+                        }
+                    })
+                    containerLeaderboard.appendChild(elLeaderboard);
+                })
+            }
+
+            async function init() {    
+                navBar();   
                 let temp = {
                     x_val: [],
                     y_val: []
@@ -315,7 +285,11 @@
                     }
                     drawBarGraph(temp);
                 })
+
                 displayBalance();
+                displayInvested();
+                displayCompanies();
+                displayLeaderboard();
                 displayTable();
             }
 
