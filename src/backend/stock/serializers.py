@@ -37,6 +37,10 @@ class APIUserSerializer(serializers.HyperlinkedModelSerializer):
         new_leaderboard.save()
 
         return new_user
+class APIUserUsernane(serializers.ModelSerializer):
+    class Meta:
+        model = APIUser
+        fields = ['id', 'username']
 
 # Stock Serializer
 class StockSerializer(serializers.ModelSerializer):
@@ -46,6 +50,7 @@ class StockSerializer(serializers.ModelSerializer):
 
 # Leaderboard Serializer
 class LeaderboardSerializer(serializers.ModelSerializer):
+    user_id = APIUserUsernane(required=True)
     class Meta:
         model = Leaderboard
         fields = ['id', 'user_id', 'points']
@@ -58,6 +63,7 @@ class PointSerializer(serializers.ModelSerializer):
 
 # StockBalance Serializer
 class StockBalanceSerializer(serializers.ModelSerializer):
+    stock_id = StockSerializer(required=True)
     class Meta:
         model = StockBalance
         fields = ['id', 'user_id', 'stock_id', 'quantity', 'total_purchase_value', 'average_value']

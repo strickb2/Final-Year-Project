@@ -280,7 +280,7 @@
                         for (let oUserID in oUserStocks) {
                             let oUserStock = oUserStocks[oUserID];
                             temp.y_val.push(oUserStock.total_purchase_value);
-                            temp.x_val.push(oUserStock.stock_id);
+                            temp.x_val.push(oUserStock.stock_id.name);
                         }
                     }
                     drawBarGraph(temp);
