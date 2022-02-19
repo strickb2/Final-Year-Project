@@ -3,339 +3,350 @@
     <body>
         <!-- Navbar -->
         <%- include('partials/nav'); -%>
-        
-        <!-- Top Row -->
-        <div class="row">
-            <!-- Balance Card -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card shadow h-100 py-2" style="border-left: .25rem solid #ffc107!important;">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Balance</div>
-                                <div id="ContainerBalance"></div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Total Invested Card -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card shadow h-100 py-2" style="border-left: .25rem solid #ffc107!important;">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Invested</div>
-                                <div id="ContainerInvested"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Companies Invested Card -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card shadow h-100 py-2" style="border-left: .25rem solid #ffc107!important;">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Companies Invested
+        <div class = "container">
+            <!-- Top Row -->
+            <div class="row">
+                <!-- Balance Card -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card shadow h-100 py-2" style="border-left: .25rem solid #ffc107!important;">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Balance</div>
+                                    <div id="ContainerBalance"></div>
                                 </div>
-                                <div id="ContainerQuantity"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Invested Card -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card shadow h-100 py-2" style="border-left: .25rem solid #ffc107!important;">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                        Invested</div>
+                                    <div id="ContainerInvested"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Companies Invested Card -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card shadow h-100 py-2" style="border-left: .25rem solid #ffc107!important;">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Companies Invested
+                                    </div>
+                                    <div id="ContainerQuantity"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leaderboard Points Card -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-warning shadow h-100 py-2" style="border-left: .25rem solid #ffc107!important;">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                        Leaderboard Points</div>
+                                    <div id="ContainerLeaderboard"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header -->
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary text-center">Your Stocks</h6>
+                        </div>
+                        <!-- Card Body -->
+                        <div class="card-body">
+                            <div class="chart-area"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                <canvas id="myChart" style="display: block; height: 160px; width: 360px;" width="450" height="200" class="chartjs-render-monitor"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Pending Requests Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2" style="border-left: .25rem solid #ffc107!important;">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    Leaderboard Points</div>
-                                <div id="ContainerLeaderboard"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="card shadow mb-4">
-                    <!-- Card Header -->
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary text-center">Your Stocks</h6>
-                    </div>
-                    <!-- Card Body -->
-                    <div class="card-body">
-                        <div class="chart-area"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                            <canvas id="myChart" style="display: block; height: 160px; width: 360px;" width="450" height="200" class="chartjs-render-monitor"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <!-- Buy + Sell Buttons -->
+            <!-- Stock Table (name, value, %diff per row) -->
+            <br><div id="ContainerTable"></div>
 
-        <!-- Buy + Sell Buttons -->
-        <!-- Stock Table (name, value, %diff per row) -->
-        <br><div id="ContainerTable"></div>
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script defer type="module">
+                import { createTransaction, getLeaderboard, getCurrentUser } from "/javascripts/data/fetchData.js"
+                import { navBar } from "/javascripts/partials/nav.js"
 
-        <script defer type="module">
-            import { createTransaction, getLeaderboard, getCurrentUser } from "/javascripts/data/fetchData.js"
-            import { navBar } from "/javascripts/partials/nav.js"
+                const containerBalance = document.getElementById("AddFunds");
+                // Fetch User Table (Total Investment, Current Value) (under graph)
+                async function displayTable() {
+                    const containerTable = document.getElementById("ContainerTable");
+                    let oPromise = getUserStocks();
 
-            const containerBalance = document.getElementById("AddFunds");
-            // Fetch User Table (Total Investment, Current Value) (under graph)
-            async function displayTable() {
-                const containerTable = document.getElementById("ContainerTable");
-                let oPromise = getUserStocks();
-
-                // Create Table Head
-                let elTable = document.createElement('table');
-                elTable.className = "table table-striped table-hover table-light";
-                elTable.innerHTML = "<thead class='table-dark'> \
-                <tr> \
-                    <th scope='col'>Name</th> \
-                    <th scope='col'>Quantity</th> \
-                    <th scope='col'>Total Purchased</th> \
-                </tr> \
-                </thead>"
-                containerTable.appendChild(elTable);
-
-                // Create Table Body
-                let elTableBody = document.createElement('tbody')
-
-                // Loop through stocks
-                oPromise.then(oUserStocks => {
-                    if (oUserStocks) {
-                        for (let i=0; i < oUserStocks.length; i++) {
-                            let oUserStock = oUserStocks[i];
-                            // Stock Row
-                            let containerStock = document.createElement("tr");
-                            
-                            // Stock Name
-                            let stockName = document.createElement("td");
-                            stockName.innerHTML = oUserStock.stock_id;
-                            containerStock.appendChild(stockName);
-
-                            // Stock Quantity
-                            let stockQuantity = document.createElement("td");
-                            stockQuantity.innerHTML = oUserStock.quantity;
-                            containerStock.appendChild(stockQuantity);
-
-                            // Stock Total Purchase Value
-                            let stockTotal = document.createElement("td");
-                            stockTotal.innerHTML = "€" + oUserStock.total_purchase_value;
-                            containerStock.appendChild(stockTotal);
-
-                            elTableBody.appendChild(containerStock);
-                        }
-                        // Add Table Body to table
-                        elTable.appendChild(elTableBody);
-                    }
-                })
-            }
-
-            // Fetch User Stocks
-            async function getUserStocks(){
-                let access = localStorage.getItem("access");
-                if(access) {
-                    let response = await fetch("http://127.0.0.1:8000/user/stockbalance/", {
-                        method: 'GET',
-                        headers: {
-                            "Accept": "application/json",
-                            "Content-Type": "application/json",
-                            "Authorization": "Bearer " + access                                       
-                        },
-                    });
-                    let data = await response.json();
-                    return data;
-                } else {
-                    //the user is not logged in,redirect them to the login page
-                    window.location.href = "/login";
-                };
-            };
-
-            // Fetch User Balance
-            async function getUserBalance(){
-                let access = localStorage.getItem("access");
-                if(access) {
-                    let response = await fetch("http://127.0.0.1:8000/users/current/", {
-                        method: 'GET',
-                        headers: {
-                            "Accept": "application/json",
-                            "Content-Type": "application/json",
-                            "Authorization": "Bearer " + access                                       
-                        },
+                    // Create Table Head
+                    let elTable = document.createElement('table');
+                    elTable.className = "table table-striped table-hover table-light";
+                    containerTable.appendChild(elTable);
+                    
+                    // Create Table Body
+                    let elTableBody = document.createElement('tbody')
+                    
+                    // Loop through stocks
+                    oPromise.then(oUserStocks => {
+                        if (oUserStocks) {
+                            if (oUserStocks.length != 0) {
+                                elTable.innerHTML = "<thead class='table-dark'> \
+                                <tr> \
+                                    <th scope='col'>Name</th> \
+                                    <th scope='col'>Quantity</th> \
+                                    <th scope='col'>Total Purchased</th> \
+                                </tr> \
+                                </thead>"
+                                for (let i=0; i < oUserStocks.length; i++) {
+                                    let oUserStock = oUserStocks[i];
+                                    // Stock Row
+                                    let containerStock = document.createElement("tr");
+                                    
+                                    // Stock Name
+                                    let stockName = document.createElement("td");
+                                    stockName.innerHTML = oUserStock.stock_id;
+                                    containerStock.appendChild(stockName);
+    
+                                    // Stock Quantity
+                                    let stockQuantity = document.createElement("td");
+                                    stockQuantity.innerHTML = oUserStock.quantity;
+                                    containerStock.appendChild(stockQuantity);
+    
+                                    // Stock Total Purchase Value
+                                    let stockTotal = document.createElement("td");
+                                    stockTotal.innerHTML = "€" + oUserStock.total_purchase_value;
+                                    containerStock.appendChild(stockTotal);
+    
+                                    elTableBody.appendChild(containerStock);
+                                }
+                            } else {
+                                let message = document.createElement("h4");
+                                message.innerHTML = "No Stocks Owned!"
+                                message.className = "text-center font-weight-bold text-primary text-uppercase";
+                                elTable.appendChild(message);
+                            }
+                            // Add Table Body to table
+                            elTable.appendChild(elTableBody);
+                        } 
                     })
-                    let data = await response.json();
-                    return data;
-                } else {
-                    //the user is not logged in,redirect them to the login page
-                    window.location.href = "/login";
-                };
-            };
+                }
 
-            // Display User Balance
-            async function displayBalance() {
-                const containerBalance = document.getElementById("ContainerBalance");
-                containerBalance.innerHTML = "";
-                let userPromise = getUserBalance();
-                let elBalance = document.createElement('h5');
-                elBalance.className = "h5 mb-0 font-weight-bold text-gray-800";
-                userPromise.then(oUser => {
-                    if (oUser) {
-                        elBalance.innerHTML = "€" + oUser.balance;
-                        containerBalance.appendChild(elBalance);
-                    }
-                })
-            }
+                // Fetch User Stocks
+                async function getUserStocks(){
+                    let access = localStorage.getItem("access");
+                    if(access) {
+                        let response = await fetch("http://127.0.0.1:8000/user/stockbalance/", {
+                            method: 'GET',
+                            headers: {
+                                "Accept": "application/json",
+                                "Content-Type": "application/json",
+                                "Authorization": "Bearer " + access                                       
+                            },
+                        });
+                        let data = await response.json();
+                        return data;
+                    } else {
+                        //the user is not logged in,redirect them to the login page
+                        window.location.href = "/login";
+                    };
+                };
+
+                // Fetch User Balance
+                async function getUserBalance(){
+                    let access = localStorage.getItem("access");
+                    if(access) {
+                        let response = await fetch("http://127.0.0.1:8000/users/current/", {
+                            method: 'GET',
+                            headers: {
+                                "Accept": "application/json",
+                                "Content-Type": "application/json",
+                                "Authorization": "Bearer " + access                                       
+                            },
+                        })
+                        let data = await response.json();
+                        return data;
+                    } else {
+                        //the user is not logged in,redirect them to the login page
+                        window.location.href = "/login";
+                    };
+                };
+
+                // Display User Balance
+                async function displayBalanceCard() {
+                    const containerBalance = document.getElementById("ContainerBalance");
+                    containerBalance.innerHTML = "";
+                    let userPromise = getUserBalance();
+                    let elBalance = document.createElement('h5');
+                    elBalance.className = "h5 mb-0 font-weight-bold text-gray-800";
+                    userPromise.then(oUser => {
+                        if (oUser) {
+                            elBalance.innerHTML = "€" + oUser.balance;
+                            containerBalance.appendChild(elBalance);
+                        }
+                    })
+                }
             
 
-            // Display User Invested
-            async function displayInvested() {
-                const containerInvested = document.getElementById("ContainerInvested");
-                containerInvested.innerHTML = "";
-                let temp;
-                let oPromise = getUserStocks();
-                let elInvested = document.createElement('h5');
-                elInvested.className = "h5 mb-0 font-weight-bold text-gray-800";
-                oPromise.then(oUserStocks => {
-                    if (oUserStocks) {
-                        for (let i=0; i < oUserStocks.length; i++) {
-                            let oUserStock = oUserStocks[i];
-                            temp = oUserStock.total_purchase_value;
+                // Display User Invested
+                async function displayInvestedCard() {
+                    const containerInvested = document.getElementById("ContainerInvested");
+                    containerInvested.innerHTML = "";
+                    let temp;
+                    let oPromise = getUserStocks();
+                    let elInvested = document.createElement('h5');
+                    elInvested.className = "h5 mb-0 font-weight-bold text-gray-800";
+                    oPromise.then(oUserStocks => {
+                        if (oUserStocks) {
+                            if (oUserStocks.length != 0) {
+                                console.log(oUserStocks);
+                                for (let i=0; i < oUserStocks.length; i++) {
+                                    let oUserStock = oUserStocks[i];
+                                    temp = oUserStock.total_purchase_value;
+                                }
+                                elInvested.innerHTML = "€" + temp;
+                            } else {
+                                elInvested.innerHTML = "€0.00";
+                            }
                         }
-                        elInvested.innerHTML = "€" + temp;
                         containerInvested.appendChild(elInvested);
-                    }
-                })
-            }
+                    })
+                }
 
-            // Display User Companies Invested
-            async function displayCompanies() {
-                const containerQuantity = document.getElementById("ContainerQuantity");
-                containerQuantity.innerHTML = "";
-                let temp = 0;
-                let oPromise = getUserStocks();
-                let elQuantity = document.createElement('h5');
-                elQuantity.className = "h5 mb-0 font-weight-bold text-gray-800";
-                oPromise.then(oUserStocks => {
-                    if (oUserStocks) {
-                        for (let i=0; i < oUserStocks.length; i++) {
-                            let oUserStock = oUserStocks[i];
-                            temp += 1;
-                        }
-                        elQuantity.innerHTML = temp;
-                        containerQuantity.appendChild(elQuantity);
-                    }
-                })
-            }
-
-            // Display User Leaderboard
-            async function displayLeaderboard() {
-                const containerLeaderboard = document.getElementById("ContainerLeaderboard");
-                containerLeaderboard.innerHTML = "";
-                let oUserPromise = getCurrentUser();
-                oUserPromise.then(oUser => {
-                    let elLeaderboard = document.createElement('h5');
-                    elLeaderboard.className = "h5 mb-0 font-weight-bold text-gray-800";
-                    let oLeaderboardPromise = getLeaderboard();
-                    // Get Leaderboard
-                    oLeaderboardPromise.then(oLeaderboard => {
-                        // For user in leaderboard
-                        for (let sId in oLeaderboard) {
-                            // If user is current user
-                            if (oLeaderboard[sId].user_id === oUser.id) {
-                                elLeaderboard.innerHTML = oLeaderboard[sId].points;
+                // Display User Companies Invested
+                async function displayCompaniesCard() {
+                    const containerQuantity = document.getElementById("ContainerQuantity");
+                    containerQuantity.innerHTML = "";
+                    let temp = 0;
+                    let oPromise = getUserStocks();
+                    let elQuantity = document.createElement('h5');
+                    elQuantity.className = "h5 mb-0 font-weight-bold text-gray-800";
+                    oPromise.then(oUserStocks => {
+                        if (oUserStocks) {
+                            for (let i=0; i < oUserStocks.length; i++) {
+                                let oUserStock = oUserStocks[i];
+                                temp += 1;
                             }
+                            elQuantity.innerHTML = temp;
+                            containerQuantity.appendChild(elQuantity);
                         }
                     })
-                    containerLeaderboard.appendChild(elLeaderboard);
-                })
-            }
+                }
 
-            async function init() {    
-                navBar();   
-                let temp = {
-                    x_val: [],
-                    y_val: []
-                };
-                let oPromise = getUserStocks();
-                oPromise.then(oUserStocks => {
-                    if (oUserStocks) {
-                        for (let oUserID in oUserStocks) {
-                            let oUserStock = oUserStocks[oUserID];
-                            temp.y_val.push(oUserStock.total_purchase_value);
-                            temp.x_val.push(oUserStock.stock_id.name);
+                // Display User Leaderboard
+                async function displayLeaderboardCard() {
+                    const containerLeaderboard = document.getElementById("ContainerLeaderboard");
+                    containerLeaderboard.innerHTML = "";
+                    let oUserPromise = getCurrentUser();
+                    oUserPromise.then(oUser => {
+                        let elLeaderboard = document.createElement('h5');
+                        elLeaderboard.className = "h5 mb-0 font-weight-bold text-gray-800";
+                        let oLeaderboardPromise = getLeaderboard();
+                        // Get Leaderboard
+                        oLeaderboardPromise.then(oLeaderboard => {
+                            // For user in leaderboard
+                            for (let sId in oLeaderboard) {
+                                // If user is current user
+                                if (oLeaderboard[sId].user_id.id === oUser.id) {
+                                    elLeaderboard.innerHTML = oLeaderboard[sId].points;
+                                }
+                            }
+                        })
+                        containerLeaderboard.appendChild(elLeaderboard);
+                    })
+                }
+
+                async function init() {    
+                    navBar();   
+                    let temp = {
+                        x_val: [],
+                        y_val: []
+                    };
+                    let oPromise = getUserStocks();
+                    oPromise.then(oUserStocks => {
+                        if (oUserStocks) {
+                            for (let oUserID in oUserStocks) {
+                                let oUserStock = oUserStocks[oUserID];
+                                temp.y_val.push(oUserStock.total_purchase_value);
+                                temp.x_val.push(oUserStock.stock_id.name);
+                            }
+                            drawBarGraph(temp);
                         }
-                    }
-                    drawBarGraph(temp);
-                })
 
-                displayBalance();
-                displayInvested();
-                displayCompanies();
-                displayLeaderboard();
-                displayTable();
-            }
+                        displayBalanceCard();
+                        displayInvestedCard();
+                        displayCompaniesCard();
+                        displayLeaderboardCard();
+                        displayTable();
+                    })
+                }
 
-            // Script for Graph
-            async function drawBarGraph(data) {
-                const labels = data.x_val;
-                const oChartData = data.y_val;
-                const ctx = document.getElementById('myChart').getContext('2d');
-                const myChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Total Purchase Value of Stocks Owned',
-                            data: oChartData,
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
+                // Script for Graph
+                async function drawBarGraph(data) {
+                    const labels = data.x_val;
+                    const oChartData = data.y_val;
+                    const ctx = document.getElementById('myChart').getContext('2d');
+                    const myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Total Purchase Value of Stocks Owned',
+                                data: oChartData,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
                             }
                         }
-                    }
-                });
-            }
-
-            init();
-            
-        </script>
+                    });
+                }
+                init();
+                
+            </script>
+        </div>
+        <!-- Footer -->
+        <%- include('partials/footer'); -%>
     </body>
 </html>
