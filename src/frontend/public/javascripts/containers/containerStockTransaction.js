@@ -22,7 +22,8 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
 
     let elCardAccountBody = document.createElement("div");
     elCardAccountBody.className = "card-body";
-    if (oUser) {
+    if (localStorage.getItem('access')) {
+        // if user signed in    
         // -------------------------- Account Balance --------------------------
         // Display Account Balance
         let elAccountBalance = document.createElement("div");
@@ -94,7 +95,7 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
                         })
                     });
                     navBar();
-                    alert("Buy Transaction Successful! Your points have been added to the leaderboard!");
+                    alert("Buy Transaction Successful! Your points have been added to the leaderboard! ");
                 });
             };
         });
@@ -159,7 +160,7 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
         inputSell.appendChild(inputBox);
         
         if (oStockBalance[0] && oStockBalance[0].total_purchase_value >= 1) {
-            inputBox.setAttribute('max', oStockBalance[0].total_purchase_value);
+            inputBox.setAttribute('max', Math.floor(oStockBalance[0].quantity * oStockCurrent['c'] * 100)/100);
         } else {
             // Display disabled buy button with message
             inputBox.setAttribute('disabled', '');
