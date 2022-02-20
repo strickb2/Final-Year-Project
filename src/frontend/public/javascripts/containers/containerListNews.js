@@ -17,7 +17,8 @@ export function displayContainerListNews(oData) {
       
     // Card Body
     let cardBody = document.createElement("div");
-    cardBody.className = "card-body";
+    cardBody.className = "card-body overflow-auto";
+    cardBody.style = "max-height: 560px"
 
     if (oData['status'] === "ok") {
       oData = oData.articles;
