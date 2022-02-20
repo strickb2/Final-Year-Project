@@ -22,6 +22,7 @@ class Stock(models.Model):
     description = models.CharField(max_length=400, null=False)
     logo = models.ImageField(upload_to='stocks')
     url = models.URLField()
+    twitter_handle = models.CharField(max_length=20, null=True)
     ticker = models.CharField(max_length=15, null=False) # This is a stock abbr name
 
     def __str__(self):

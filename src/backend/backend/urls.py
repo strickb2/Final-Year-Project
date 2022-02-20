@@ -24,5 +24,7 @@ urlpatterns = [
     path('transactions/create/', views.CreateTransactionAPIView.as_view(), name='transaction'),
     path('api/alphavantage/timeseries/', views.TimeSeriesAPIView.as_view()),
     path('api/googlenews/articles/', views.GoogleNewsAPIView.as_view()),
-    path('api/finnhub/currentvalue/', views.FinnHubAPIView.as_view())
+    path('api/finnhub/currentvalue/', views.FinnHubAPIView.as_view()),
+    path('api/twitter/tweets/', views.TweetsAPIView.as_view()),
+    path('api/twitter/tweets/sentiment/', views.TweetsSentimentAPIView.as_view())
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

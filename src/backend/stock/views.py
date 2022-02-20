@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .alpha_vantage.time_series import TimeSeries
 from .google_news.article import GoogleNews
+from .tweepy.fetch_tweets import fetch_tweets_text
+from .tweepy.sentiment import fetch_sentiment
 
 # ----------------------- Model View Sets ------------------------
 
@@ -137,4 +139,29 @@ class FinnHubAPIView(APIView):
     def get(self, request, format=None):
         ticker = request.query_params['ticker']
         data = CurrentValue(ticker).get_values()
+        return Response(data)
+
+# ---------------------- Twitter Tweets Data ----------------------
+class TweetsAPIView(APIView):
+    '''
+    API Endpoint: Retrieves current stocks twitter feed
+    '''
+    permission_classes = [AllowAny]
+
+    def get(self, request, format=None):
+        twitter_handler = request.query_params['twitter']
+        data = fetch_tweets_text(twitter_handler)
+        return Response(data)
+
+
+# ---------------------- Twitter Sentiment Analysis Data ----------------------
+class TweetsSentimentAPIView(APIView):
+    '''
+    API Endpoint: Retrieves current stocks twitter senitment analysis
+    '''
+    permission_classes = [AllowAny]
+
+    def get(self, request, format=None):
+        twitter_handler = request.query_params['twitter']
+        data = fetch_sentiment(twitter_handler)
         return Response(data)

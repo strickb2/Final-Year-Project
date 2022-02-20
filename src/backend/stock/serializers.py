@@ -46,7 +46,7 @@ class APIUserUsernane(serializers.ModelSerializer):
 class StockSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stock
-        fields = ['id', 'name', 'description', 'logo', 'url', 'ticker']
+        fields = ['id', 'name', 'description', 'logo', 'url', 'twitter_handle', 'ticker']
 
 # Leaderboard Serializer
 class LeaderboardSerializer(serializers.ModelSerializer):
