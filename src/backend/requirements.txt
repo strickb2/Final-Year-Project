@@ -6,3 +6,7 @@ requests
 Pillow
 django-cors-headers
 djangorestframework-simplejwt
+tweepy
+nltk
+pandas
+textblob
