@@ -127,7 +127,7 @@
                                     
                                     // Stock Name
                                     let stockName = document.createElement("td");
-                                    stockName.innerHTML = oUserStock.stock_id;
+                                    stockName.innerHTML = oUserStock.stock_id.name;
                                     containerStock.appendChild(stockName);
     
                                     // Stock Quantity
@@ -337,12 +337,18 @@
                         options: {
                             scales: {
                                 y: {
-                                    beginAtZero: true
+                                    beginAtZero: true,
+                                    ticks: {
+                                        // Include a dollar sign in the ticks
+                                        callback: function(value, index, values) {
+                                            return '€' + value.toFixed(2);
+                                        }
+                                    }
                                 }
                             }
                         }
-                    });
-                }
+                    })
+                };
                 init();
                 
             </script>
