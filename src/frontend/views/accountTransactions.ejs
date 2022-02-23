@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+    <%- include('partials/head'); -%>
+    <body>
+        <!-- Navbar -->
+        <%- include('partials/nav'); -%>
+
+        <!-- Container -->
+        <div class="container">
+    
+            <!-- Title -->
+            <section class="text-center container">
+                <div class="row py-lg-5">
+                    <div class="col-lg-6 col-md-8 mx-auto">
+                        <h1 class="fw-light">Stock Table</h1>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Transaction History Tables -->
+            <section>
+                <div id="BalanceTable"></div>
+            </section>
+            <br>
+            <section class="text-center container">
+                <div class="row py-lg-5">
+                    <div class="col-lg-6 col-md-8 mx-auto">
+                        <h1 class="fw-light">Transaction Table</h1>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div id="StockTable"></div>
+            </section>
+        </div>
+
+        <!-- Javascript -->
+        <script defer type="module">
+            // Fetch User Transactions
+            async function getUserTransactions(){
+                let access = localStorage.getItem("access");
+                if(access) {
+                    let response = await fetch("http://127.0.0.1:8000/transactions/all/", {
+                        method: 'GET',
+                        headers: {
+                            "Accept": "application/json",
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer " + access                                       
+                        },
+                    });
+                    let data = await response.json();
+                    return data;
+                } else {
+                    //the user is not logged in,redirect them to the login page
+                    window.location.href = "/login";
+                };
+            };
+
+            // Display Transaction Table
+            async function displayTable() {
+                // Buy + Sell History
+                const balanceTable = document.getElementById("BalanceTable");
+                // Add + Withdraw History
+                const stockTable = document.getElementById("StockTable");
+                let oPromise = getUserTransactions();
+
+                
+                // Loop through stocks
+                oPromise.then(oUserStocks => {
+                    if (oUserStocks.length > 0) {
+                        // Create Table Head
+                        let elBalanceTable = document.createElement('table');
+                        let elStockTable = document.createElement('table');
+                        elBalanceTable.className = "table table-striped table-hover table-light";
+                        elStockTable.className = "table table-striped table-hover table-light";
+                        elBalanceTable.innerHTML = "<thead class='table-dark'> \
+                        <tr> \
+                            <th scope='col'>ID</th> \
+                            <th scope='col'>Date</th> \
+                            <th scope='col'>Type</th> \
+                            <th scope='col'>Total</th> \
+                            <th scope='col'>Name</th> \
+                            <th scope='col'>Quantity</th> \
+                        </tr> \
+                        </thead>"
+                        elStockTable.innerHTML = "<thead class='table-dark'> \
+                        <tr> \
+                            <th scope='col'>ID</th> \
+                            <th scope='col'>Date</th> \
+                            <th scope='col'>Type</th> \
+                            <th scope='col'>Total</th> \
+                        </tr> \
+                        </thead>"
+                        balanceTable.appendChild(elBalanceTable);
+                        stockTable.appendChild(elStockTable);
+        
+                        // Create Table Body
+                        let elBalanceTableBody = document.createElement('tbody');
+                        let elStockTableBody = document.createElement('tbody');
+                        for (const i in oUserStocks) {
+                            let oUserStock = oUserStocks[i];
+                            console.log(oUserStock);
+
+                            // Stock Row
+                            let containerBalance = document.createElement("tr");
+
+                            // Transaction ID
+                            let stockID = document.createElement("td");
+                            stockID.innerHTML = oUserStock.id;
+                            containerBalance.appendChild(stockID);
+
+                            // Transaction Date
+                            let stockDate = document.createElement("td");
+                            let date = oUserStock.datetime.substring(0, 10);
+                            stockDate.innerHTML = date;
+                            containerBalance.appendChild(stockDate);
+
+                            // Transaction Type
+                            let stockType = document.createElement("td");
+                            if (oUserStock.type == 1 || oUserStock.type == 3) {
+                                if (oUserStock.type == 1) {
+                                    stockType.innerHTML = "Buy";
+                                } else {
+                                    stockType.innerHTML = "Sell";
+                                }                     
+                            } else {
+                                if (oUserStock.type == 2) {
+                                    stockType.innerHTML = "Withdraw";
+                                } else {
+                                    stockType.innerHTML = "Add";
+                                }
+                            }
+                            containerBalance.appendChild(stockType);
+
+                            // Transaction Total
+                            let stockTotal = document.createElement("td");
+                            stockTotal.innerHTML = "€" + oUserStock.total;
+                            containerBalance.appendChild(stockTotal);
+
+                            if (oUserStock.type == 1 || oUserStock.type == 3) {
+                                // Stock Name + Quantity
+                                 let stockName = document.createElement("td");
+                                 let stockQuantity = document.createElement("td");
+                                 let stock = oUserStock.stock;
+                                 if (stock != null) {
+                                    stockName.innerHTML = stock.stock_id;
+                                    stockQuantity.innerHTML = stock.quantity;
+                                 };
+                                 containerBalance.appendChild(stockName);
+                                 containerBalance.appendChild(stockQuantity);
+                                 elBalanceTableBody.appendChild(containerBalance);
+                            } else {
+                                elStockTableBody.appendChild(containerBalance);
+                            }
+
+                        }
+                        // Add Table Body to table
+                        elBalanceTable.appendChild(elBalanceTableBody);
+                        elStockTable.appendChild(elStockTableBody);
+                    } else {
+                        balanceTable.className = "h6 text-center font-weight-bold text-primary text-uppercase";
+                        stockTable.className = "h6 text-center font-weight-bold text-primary text-uppercase";
+                        balanceTable.innerHTML = "No Buy/Sell Transactions Found!";
+                        stockTable.innerHTML = "No Add/Withdraw Transactions Found!";
+                    }
+                })
+            }
+
+            async function init() {
+                displayTable();
+            }
+
+            init();
+        </script>
+    </body>
+</html>
