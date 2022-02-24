@@ -99,12 +99,20 @@ export function getStockBalance(stockId=null) {
     }
 }
 
-export function createTransaction(data) {
+export async function createTransaction(data) {
     if (data) {
         return fetchPOSTTransactionData("http://127.0.0.1:8000/transactions/create/", data);
     }
 }
 
 export function getTimeSeries(sTicker) {
-    return fetchData("http://127.0.0.1:8000/api/alphavantage/timeseries/?ticker=" + sTicker)
+    return fetchData("http://127.0.0.1:8000/api/alphavantage/timeseries/?ticker=" + sTicker);
+}
+
+export function getTweetsStock(sHandle) {
+    return fetchData("http://127.0.0.1:8000/api/twitter/tweets/?twitter=" + sHandle);
+}
+
+export function getTweetSentimentStock(sHandle) {
+    return fetchData("http://127.0.0.1:8000/api/twitter/tweets/sentiment/?twitter=" + sHandle);
 }

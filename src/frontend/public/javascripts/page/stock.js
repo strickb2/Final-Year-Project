@@ -1,9 +1,10 @@
-import { getStockData, getCurrentStockValue, getTimeSeries, getCurrentUser, getStockBalance, getNewsArticles } from '../data/fetchData.js'
-import { displayContainerStock } from '../containers/containerStock.js'
-import { displayContainerListNews } from '../containers/ContainerListNews.js'
+import { getStockData, getCurrentStockValue, getTimeSeries, getCurrentUser, getStockBalance, getNewsArticles } from '../data/fetchData.js';
+import { displayContainerStock } from '../containers/containerStock.js';
+import { displayContainerListNews } from '../containers/ContainerListNews.js';
 import { displayContainerStockTransaction } from '../containers/containerStockTransaction.js';
-import { displayContainerStockGraph } from '../containers/containerStockGraph.js'
-import { navBar } from '../partials/nav.js'
+import { displayContainerStockTwitter } from '../containers/containerStockTwitter.js';
+import { displayContainerStockGraph } from '../containers/containerStockGraph.js';
+import { navBar } from '../partials/nav.js';
 
 function init() {
     navBar();
@@ -29,6 +30,9 @@ function init() {
                     displayContainerStockTransaction(oUser, oStock, oStockBalance, oStockCurrent);
                 })
             });
+
+            // Get stocks twitter handler and display feed
+            displayContainerStockTwitter(oStock.twitter_handle)
         });
 
         // Get news articles and display news articles containers

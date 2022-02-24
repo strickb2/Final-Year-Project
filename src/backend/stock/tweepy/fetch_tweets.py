@@ -22,7 +22,8 @@ def fetch_tweets_text(screen_name):
         tweets = [] # Empty list that stores all the tweets
         for tweet in fetched_data:
             txt = tweet.text # Gets the text from the tweet
-            tweets.append(txt)
+            created_at = tweet.created_at # Gets time tweet was made
+            tweets.append({"text":txt, "created_at": created_at})
             if len(tweets) == 5:
                 break
         return tweets
