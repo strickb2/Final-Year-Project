@@ -36,7 +36,7 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
         
         // Title Buy
         let formTitle = document.createElement("div");
-        formTitle.innerHTML = "<hr><p class='mb-0'>Buy Stock</p>"
+        formTitle.innerHTML = "<hr><p class='mb-0'>Buy Stock (Min €1.00)</p>"
         formBuy.appendChild(formTitle)
 
         // Input container
@@ -59,7 +59,7 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
         inputBox.setAttribute('type', 'number');
         inputBox.setAttribute('placeholder', "0.00");
         inputBox.setAttribute('max', oUser.balance);
-        inputBox.setAttribute('min', 0.01);
+        inputBox.setAttribute('min', 1.00);
         inputBox.setAttribute('aria-label', 'Buy');
         inputBox.setAttribute('aria-describedby', 'icon-buy');
         inputBox.setAttribute('step', ".01");
@@ -85,19 +85,20 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
                 'stock_id': oStock.id,
                 'stock_price': oStockCurrent['c']
             };
-            let bResponse = createTransaction(data);
-            if (bResponse) {
-                const oStockCurrentPromise = getCurrentStockValue(oStock.ticker);
-                oStockCurrentPromise.then(oStockCurrent => {
-                    getCurrentUser().then(oUser => {
-                        getStockBalance(oStock.id).then(oStockBalance => {
-                            displayContainerStockTransaction(oUser, oStock, oStockBalance, oStockCurrent);
-                        })
+            createTransaction(data).then(bResponse => {
+                if (bResponse) {
+                    const oStockCurrentPromise = getCurrentStockValue(oStock.ticker);
+                    oStockCurrentPromise.then(oStockCurrent => {
+                        getCurrentUser().then(oUser => {
+                            getStockBalance(oStock.id).then(oStockBalance => {
+                                displayContainerStockTransaction(oUser, oStock, oStockBalance, oStockCurrent);
+                            })
+                        });
+                        navBar();
+                        alert("Buy Transaction Successful! Your points have been added to the leaderboard! ");
                     });
-                    navBar();
-                    alert("Buy Transaction Successful! Your points have been added to the leaderboard! ");
-                });
-            };
+                };
+            });
         });
         elCardAccountBody.appendChild(formBuy)
         // -------------------------- End Account Balance --------------------------
@@ -109,15 +110,17 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
             // If user owns this stock Display their Stock Balance and has a total value > 2
             if (Math.floor(oStockBalance[0].quantity * oStockCurrent['c'] * 100)/100 >= 2) {
                 elStockBalance.innerHTML = "<hr><p class='mb-0'>Stock Balance</p> \
-                <h5 class='text-secondary'> €" + Math.floor(oStockBalance[0].quantity * oStockCurrent['c'] * 100)/100 + "</h5> \
-                <p class='mb-0'>Stock Average Purchase Value</p> \
-                <h5 class='text-secondary'> €" + oStockBalance[0].average_value + "</h5>"
+                <h5 class='text-secondary'> €" + Math.floor(oStockBalance[0].quantity * oStockCurrent['c'] * 100)/100 + "</h5>"
+                // ---- Due to issue with rounding this was removed ----
+                // <p class='mb-0'>Stock Average Purchase Value</p> \
+                // <h5 class='text-secondary'> €" + oStockBalance[0].average_value + "</h5>"
             } else {
                 // Due to maths logic error at low decimal don't include avg value
                 elStockBalance.innerHTML = "<hr><p class='mb-0'>Stock Balance</p> \
-                <h5 class='text-secondary'> €" + Math.floor(oStockBalance[0].quantity * oStockCurrent['c'] * 100)/100 + "</h5> \
-                <p class='mb-0'>Stock Average Purchase Value</p> \
-                <h5 class='text-secondary'> Cannot Calculate</h5>"
+                <h5 class='text-secondary'> €" + Math.floor(oStockBalance[0].quantity * oStockCurrent['c'] * 100)/100 + "</h5>"
+                // ---- Due to issue with rounding this was removed ----
+                // <p class='mb-0'>Stock Average Purchase Value</p> \
+                // <h5 class='text-secondary'> Cannot Calculate</h5>"
             }
         } else { 
             // If user owns this stock Display their Stock Balance
@@ -126,13 +129,13 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
         };
         elCardAccountBody.appendChild(elStockBalance);
 
-        // Display Buy Card
+        // Display Sell Form
         let formSell = document.createElement("form");
         
-        // Title Buy
+        // Title Sell
         formTitle = document.createElement("div");
-        formTitle.innerHTML = "<hr><p class='mb-0'>Sell Stock</p>"
-        formSell.appendChild(formTitle)
+        formTitle.innerHTML = "<hr><p class='mb-0'>Sell Stock (Min €2.00)</p>"
+        formSell.appendChild(formTitle);
 
         // Input container
         let inputSell = document.createElement("div");
@@ -159,7 +162,7 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
         inputBox.setAttribute('step', ".01");
         inputSell.appendChild(inputBox);
         
-        if (oStockBalance[0] && oStockBalance[0].total_purchase_value >= 1) {
+        if (oStockBalance[0] && oStockBalance[0].total_purchase_value >= 2) {
             inputBox.setAttribute('max', Math.floor(oStockBalance[0].quantity * oStockCurrent['c'] * 100)/100);
         } else {
             // Display disabled buy button with message
@@ -181,19 +184,21 @@ export function displayContainerStockTransaction(oUser, oStock, oStockBalance, o
                 'stock_id': oStock.id,
                 'stock_price': oStockCurrent['c']
             };
-            let bResponse = createTransaction(data);
-            if (bResponse) {
-                const oStockCurrentPromise = getCurrentStockValue(oStock.ticker);
-                oStockCurrentPromise.then(oStockCurrent => {
-                    getCurrentUser().then(oUser => {
-                        getStockBalance(oStock.id).then(oStockBalance => {
-                            displayContainerStockTransaction(oUser, oStock, oStockBalance, oStockCurrent);
-                        })
+
+            createTransaction(data).then(bResponse => {
+                if (bResponse) {
+                    const oStockCurrentPromise = getCurrentStockValue(oStock.ticker);
+                    oStockCurrentPromise.then(oStockCurrent => {
+                        getCurrentUser().then(oUser => {
+                            getStockBalance(oStock.id).then(oStockBalance => {
+                                displayContainerStockTransaction(oUser, oStock, oStockBalance, oStockCurrent);
+                            })
+                        });
+                        navBar();
+                        alert("Sell Transaction Successful! Your points have been added to the leaderboard!");
                     });
-                    navBar();
-                    alert("Sell Transaction Successful! Your points have been added to the leaderboard!");
-                });
-            };
+                };
+            });
         });
         elCardAccountBody.appendChild(formSell)
     } else {
