@@ -98,7 +98,7 @@ class TransactionSerializer(serializers.ModelSerializer):
             stock_data = validated_data.pop('stock')
             stock_id = stock_data['stock_id']
             stock_price = stock_data['stock_price']
-
+            
             # Buy Stock
             if type.name == "Buy":
                 if user.balance >= total:
@@ -117,7 +117,7 @@ class TransactionSerializer(serializers.ModelSerializer):
                     )
 
                     # Update Account Balance
-                    user.balance -= total
+                    user.balance -= Decimal(total)
                     user.save()
 
                     stock_bal, created = StockBalance.objects.get_or_create(user_id=user, stock_id=stock_id)
@@ -126,11 +126,11 @@ class TransactionSerializer(serializers.ModelSerializer):
                     if not created:
                         # Update Stock Balance
                         stock_bal.quantity += Decimal(stock_transaction.quantity())
-                        stock_bal.total_purchase_value += total
+                        stock_bal.total_purchase_value += Decimal(total)
                         stock_bal.save()
                     else:
                         stock_bal.quantity = Decimal(stock_transaction.quantity())
-                        stock_bal.total_purchase_value = total
+                        stock_bal.total_purchase_value = Decimal(total)
                         stock_bal.save()
 
                     # Update leaderboard score
@@ -173,7 +173,7 @@ class TransactionSerializer(serializers.ModelSerializer):
                     stock_bal.save()
                     
                     # Update Account Balance
-                    user.balance += total
+                    user.balance += Decimal(total)
                     user.save()
 
                     # Update leaderboard score
@@ -211,7 +211,7 @@ class TransactionSerializer(serializers.ModelSerializer):
                 )
                     
                 # Update Account Balance
-                user.balance -= total
+                user.balance -= Decimal(total)
                 user.save()
 
                 return transaction
