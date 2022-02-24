@@ -120,10 +120,28 @@
     </div>
     <script type="module">
         import { navBar } from '/javascripts/partials/nav.js'; 
-        navBar()
+        navBar();
     </script>
+    
     <script>
         let myform = document.getElementById("signup-form"); // get the form
+
+        function validateDOB(date){
+            let validDate = moment().subtract(18, "years");
+            let birthday = moment(date);
+    
+            if (validDate.isAfter(birthday)) {
+                return date;    
+            } else {
+                return false;
+            }
+        }
+
+        function validatePPS(pps) {
+            let ppsRegex = /([0-9]){6}\w([A-Z]){1}/g;
+            let ppsResult = ppsRegex.test(pps);
+            return ppsResult;
+        }
 
         async function register(uname, pass, email, name, dob, pps, phone, address) {
             const rawResponse = await fetch("http://127.0.0.1:8000/register/", {
@@ -163,7 +181,7 @@
             let address = document.getElementById("address").value;
             let phone = document.getElementById("phone").value;
 
-            if (uname && name && email && pass && dob && pps && address && parseInt(phone)) {
+            if (uname && name && email && pass && validateDOB(dob) && validatePPS(pps) && address && parseInt(phone)) {
                 register(uname, pass, email, name, dob, pps, phone, address)
             } else {
                 // If fields are empty, an alert prompts the user to fill them.
@@ -179,11 +197,11 @@
                 if(password == '') {
                     alert('Please enter password');
                 }
-                if(dob == '') {
-                    alert('Please enter date of birth');
+                if(dob == '' || !validateDOB(dob)) {
+                    alert('Please enter valid date of birth');
                 }
-                if(pps == '') {
-                    alert('Please enter PPS number');
+                if(pps == '' || !validatePPS(pps)) {
+                    alert('Please enter valid PPS number');
                 }
                 if(address == '') {
                     alert('Please enter address');
@@ -195,5 +213,6 @@
         });
         
       </script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/moment.min.js"></script>
   </body>
 </html>
