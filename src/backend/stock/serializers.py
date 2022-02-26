@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import *
 from decimal import Decimal
-import math
 
 # -------------------- Model ViewSet Serializers --------------------
 
@@ -167,13 +166,25 @@ class TransactionSerializer(serializers.ModelSerializer):
                         stock_price=stock_price,
                     )
 
+                    # Calculate Commission fee to be applied
+                    commission = Decimal(total) * Decimal(.01)
+                    if commission < 0.75:
+                        commission = 0.75
+
+                    # Create a commission fee transaction
+                    Transaction.objects.create(
+                        user_id=user,
+                        type=TransactionType.objects.get(name="Commission"),
+                        total=commission
+                    )
+
                     # Update Stock Balance
                     stock_bal.total_purchase_value -= Decimal(stock_bal.average_value() * Decimal(stock_transaction.quantity()))
                     stock_bal.quantity -= Decimal(stock_transaction.quantity())
                     stock_bal.save()
                     
                     # Update Account Balance
-                    user.balance += Decimal(total)
+                    user.balance += Decimal(total) - Decimal(commission)
                     user.save()
 
                     # Update leaderboard score
@@ -194,9 +205,19 @@ class TransactionSerializer(serializers.ModelSerializer):
                     type=type,
                     total=total
                 )
+
+                # Calculate Stripe Fee (1.4% + €0.25)
+                stripe = (Decimal(total) * Decimal(0.014)) + Decimal(0.25)
+
+                # Create Stripe fee transaction
+                Transaction.objects.create(
+                    user_id=user,
+                    type=TransactionType.objects.get(name="Stripe"),
+                    total=stripe
+                )
                     
                 # Update Account Balance
-                user.balance += total
+                user.balance += total - stripe
                 user.save()
                 
                 return transaction
