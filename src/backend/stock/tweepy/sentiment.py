@@ -9,6 +9,10 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer 
 from textblob import TextBlob
 
+# 
+# Completed following guidance from geeksforgeeks:
+# Ref: https://www.geeksforgeeks.org/twitter-sentiment-analysis-using-python/
+# 
 
 def cleanText(text):
     text = text.lower()
