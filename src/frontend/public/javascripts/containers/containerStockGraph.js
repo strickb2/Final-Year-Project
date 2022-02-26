@@ -7,8 +7,8 @@ export function displayContainerStockGraph(oTimeSeries) {
     card.style = "height:480px"
 
     let cardHeader = document.createElement("div");
-    cardHeader.className = "card-header lead text-primary d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 pt-2 mb-3 border-bottom";
-    cardHeader.style = "border-left:0.25rem solid #0d6efd!important;"
+    cardHeader.className = "card-header lead text-info d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 pt-2 mb-3 border-bottom";
+    cardHeader.style = "border-left:0.25rem solid #5bc0de!important;"
     cardHeader.innerHTML = "Real-Time"
 
     let cardHeaderLinks = document.createElement("ul");
@@ -16,10 +16,10 @@ export function displayContainerStockGraph(oTimeSeries) {
     cardHeaderLinks.id = "pills-tab";
     cardHeaderLinks.role = "tablist";
     cardHeaderLinks.innerHTML = "<li class='nav-item'> \
-        <a class='btn btn-outline-primary mx-1 active' id='graph-day-tab' data-toggle='pill' href='#graph-day' role='tab' aria-controls='graph-day' aria-selected='true'>Day</a> \
+        <a class='btn btn-outline-info mx-1 active' id='graph-day-tab' data-toggle='pill' href='#graph-day' role='tab' aria-controls='graph-day' aria-selected='true'>Day</a> \
         </li> \
         <li class='nav-item'> \
-        <a class='btn btn-outline-primary mx-1' id='graph-month-tab' data-toggle='pill' href='#graph-month' role='tab' aria-controls='graph-month' aria-selected='false'>Month</a> \
+        <a class='btn btn-outline-info mx-1' id='graph-month-tab' data-toggle='pill' href='#graph-month' role='tab' aria-controls='graph-month' aria-selected='false'>Month</a> \
         </li>"
     cardHeader.appendChild(cardHeaderLinks);
     card.appendChild(cardHeader)
@@ -67,11 +67,11 @@ function createLineGraphChartJS(oData, sTimePeriod) {
         data: {
             labels: labels,
             datasets: [{
-                fill: true,
+                fill: false,
                 data: oChartData,
                 tension: 0,
-                borderColor: 'rgb(0, 0, 255)',
-                backgroundColor: 'rgb(30, 150, 255)',
+                borderColor: 'rgb(91, 192, 222)',
+                backgroundColor: 'rgb(91, 192, 222)',
                 borderWidth: 1
             }]
         },

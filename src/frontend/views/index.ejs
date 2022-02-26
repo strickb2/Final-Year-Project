@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html>
   <%- include('partials/head'); -%>
-  <body>
+  <body style="background-color: #FFF5EE;">
     <!-- Navbar -->
     <%- include('partials/nav'); -%>
     <div class="container">
-      <br>
-      <br>
+        <section id="titleHome">
+          <div class="text-center p-3 mt-4">
+            <h4 class="display-4">Welcome to StockCompete</h4>
+            <hr style="height: 0.2rem; max-width: 4rem; margin: 1.5rem auto; background-color: #2831ff; opacity: 1;">
+            <p class="lead">Start your trading journey here!</p>
+
+          </div>
+        </section>
+        
         <!-- Stock Search Bar -->
         <section id="stockSearchBar">
           <div class="row justify-content-center">
             <form class="form-inline col-8">
               <input class="form-control" style="width:80%" placeholder="Search Stocks" id="searchStocksInput">
-              <button class="btn btn-success" style="width:20%" type="button" onclick="searchStocks()">Search</button>
+              <button class="btn btn-primary text-white" style="width:20%" type="button" onclick="searchStocks()">Search</button>
             </form>
           </div>
         </section> 
@@ -25,7 +32,7 @@
             <section id="listStock"></section>
           </div>
         </div>
-
+        <br>
         <!-- News on stock market -->
         <section id="listNews">
           <div class="card border-warning" style="height:200px; width:100%">

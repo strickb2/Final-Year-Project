@@ -8,7 +8,7 @@ export function displayContainerStockTwitter(twitter_handle) {
     // Card Twitter
     let cardTwitter = document.createElement("div");
     cardTwitter.className = "card shadow";
-    cardTwitter.style = "color: #1266F1!important; height:480px;";
+    cardTwitter.style = "color: #1266F1!important;";
 
     // Card Header + Sentiment Emoji + Percent Sentiment
     let oPromiseSentiment = getTweetSentimentStock(twitter_handle);

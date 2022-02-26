@@ -4,15 +4,21 @@ let containerListStocks = document.getElementById("listStock");
 
 export function displayContainerListStocks(oData) {
     containerListStocks.innerHTML = "";
-    if (oData) {
+    
+    // Create Card for stocks content
+    let cardListStocks = document.createElement("div");
+    cardListStocks.className = "card";
+
+    if (oData.length != 0) {
+        console.log(oData);
         // If there is data returned create a table
         let tableStockList = document.createElement("table");
-        tableStockList.className = "table table-hover table-light";
+        tableStockList.className = "table table-hover mb-0";
 
         // Create a table header
         let tableHeaderStockList = document.createElement("thead");
-        tableHeaderStockList.className = "text-white"
-        tableHeaderStockList.style = "background-color: #34D1BF;"
+        tableHeaderStockList.className = "mt-0 text-white"
+        tableHeaderStockList.style="background-color: #6610f2!important;"
         tableHeaderStockList.innerHTML = "<tr class='text-center'> \
             <th scope='col'>Logo</th> \
             <th scope='col'>Stock</th> \
@@ -75,9 +81,14 @@ export function displayContainerListStocks(oData) {
             });
         };
         tableStockList.appendChild(tableBodyStockList);
-        containerListStocks.appendChild(tableStockList);
+        cardListStocks.appendChild(tableStockList);
+        containerListStocks.appendChild(cardListStocks);
     } else {
         // If there is no data returned
-        // TODO: Output Error
+        cardListStocks.className += " text-center"
+        cardListStocks.style = "border:0.1rem solid #6610f2!important; color: #6610f2;";
+        cardListStocks.innerHTML = "<div class='card-body'>No Stocks Found</div>";
+
+        containerListStocks.appendChild(cardListStocks);
     }
 };

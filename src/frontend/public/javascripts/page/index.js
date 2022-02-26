@@ -7,7 +7,7 @@ function init() {
     navBar();
     // Get data and populate containers 
     getStockData().then(oDataStocks => displayContainerListStocks(oDataStocks));
-    // getNewsArticles("Stock Market").then(oDataStocks => displayContainerListNews(oDataStocks));
+    getNewsArticles("Stock Market").then(oDataStocks => displayContainerListNews(oDataStocks));
 }
 
 init();

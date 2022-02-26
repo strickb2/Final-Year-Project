@@ -44,7 +44,7 @@ export function displayContainerListNews(oData) {
         // Article Image left
         let elArticleImage = document.createElement("div");
         elArticleImage.className = "col-3";
-        elArticleImage.innerHTML = "<img class='img-fluid rounded-start' style='height:150px; width:100%'  src='" + oArticle.urlToImage + "'></img>";
+        elArticleImage.innerHTML = "<img class='img-fluid rounded-start' style='height:130px; width:240px' src='" + oArticle.urlToImage + "'></img>";
         elArticleRow.appendChild(elArticleImage)
 
         // Article Content middle to right
@@ -55,13 +55,13 @@ export function displayContainerListNews(oData) {
         let dt = new Date(oArticle.publishedAt)
         let elArticleContentTitle = document.createElement("div");
         elArticleContentTitle.className = "d-flex justify-content-between";
-        elArticleContentTitle.innerHTML = "<h6>" + oArticle.title + "</h6>  \
-        <small class='text-muted'><i>" + dt.toDateString()  + "</i></small>";
+        elArticleContentTitle.innerHTML = "<h6 style='font-size:0.9rem'>" + oArticle.title + "</h6>  \
+        <small class='text-muted ml-2'><i>" + dt.toDateString()  + "</i></small>";
         elArticleContent.appendChild(elArticleContentTitle);
 
         let elArticleContentBody = document.createElement("div");
         elArticleContentBody.className = "d-flex justify-content-left";
-        elArticleContentBody.innerHTML = "<p class='fs-4'>" + oArticle.description + "</p>";
+        elArticleContentBody.innerHTML = "<p style='font-size:0.9rem'>" + oArticle.description + "</p>";
         elArticleContent.appendChild(elArticleContentBody);
 
         elArticleRow.appendChild(elArticleContent);
