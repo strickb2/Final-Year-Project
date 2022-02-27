@@ -69,11 +69,12 @@ class StockBalanceSerializer(serializers.ModelSerializer):
 
 # Stock Transaction Serializer
 class StockTransactionSerializer(serializers.ModelSerializer):
-    stock_id = StockSerializer(required=False)
+    stock_id = serializers.PrimaryKeyRelatedField(queryset=Stock.objects.all(), required=True)
+    stock_name = serializers.ReadOnlyField(source='stock_id.name')
     
     class Meta:
         model = StockTransaction
-        fields = ['stock_id', 'quantity', 'stock_price']
+        fields = ['quantity', 'stock_price', 'stock_id', 'stock_name']
 
 # Transaction Serializer
 class TransactionSerializer(serializers.ModelSerializer):
