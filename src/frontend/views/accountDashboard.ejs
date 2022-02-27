@@ -1,6 +1,6 @@
 <!DOCTYPE html>
     <%- include('partials/head'); -%>
-    <body>
+    <body style="background-color: #FFF5EE;">
         <!-- Navbar -->
         <%- include('partials/nav'); -%>
         <div class = "container">
@@ -8,12 +8,12 @@
             <br>
             <div class="row">
                 <!-- Balance Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card shadow h-100 py-2" style="border-left: .25rem solid #ffc107!important;">
+                <div class="col-xl-3 mb-4">
+                    <div class="card shadow" style="border-left: .25rem solid #0777ff;">
                         <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="font-weight-bold text-primary text-uppercase mb-1">
                                         Balance</div>
                                     <div id="ContainerBalance"></div>
                                 </div>
@@ -23,12 +23,12 @@
                 </div>
 
                 <!-- Total Invested Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card shadow h-100 py-2" style="border-left: .25rem solid #ffc107!important;">
+                <div class="col-xl-3">
+                    <div class="card shadow" style="border-left: .25rem solid #07ff4d93;">
                         <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="font-weight-bold text-success text-uppercase mb-1">
                                         Invested</div>
                                     <div id="ContainerInvested"></div>
                                 </div>
@@ -38,12 +38,12 @@
                 </div>
 
                 <!-- Companies Invested Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card shadow h-100 py-2" style="border-left: .25rem solid #ffc107!important;">
+                <div class="col-xl-3">
+                    <div class="card shadow" style="border-left: .25rem solid #07acffe1;">
                         <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Companies Invested
+                            <div class="row">
+                                <div class="col">
+                                    <div class="font-weight-bold text-info text-uppercase mb-1">Companies Invested
                                     </div>
                                     <div id="ContainerQuantity"></div>
                                 </div>
@@ -53,12 +53,12 @@
                 </div>
 
                 <!-- Leaderboard Points Card -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-warning shadow h-100 py-2" style="border-left: .25rem solid #ffc107!important;">
+                <div class="col-xl-3">
+                    <div class="card shadow" style="border-left: .25rem solid #ffc107">
                         <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="font-weight-bold text-warning text-uppercase mb-1">
                                         Leaderboard Points</div>
                                     <div id="ContainerLeaderboard"></div>
                                 </div>
@@ -71,12 +71,12 @@
                 <div class="col">
                     <div class="card shadow mb-4">
                         <!-- Card Header -->
-                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <div class="card-header">
                             <h6 class="m-0 font-weight-bold text-primary text-center">Your Stocks</h6>
                         </div>
                         <!-- Card Body -->
                         <div class="card-body">
-                            <div class="chart-area"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                            <div class="chart-area"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"></div><div class="chartjs-size-monitor-shrink"></div></div>
                                 <canvas id="myChart" style="display: block; height: 160px; width: 360px;" width="450" height="200" class="chartjs-render-monitor"></canvas>
                             </div>
                         </div>
@@ -99,6 +99,7 @@
                 // Fetch User Table (Total Investment, Current Value) (under graph)
                 async function displayTable() {
                     const containerTable = document.getElementById("ContainerTable");
+                    containerTable.style = "overflow: auto; height: 300px; display: block;"
                     let oPromise = getUserStocks();
 
                     // Create Table Head
@@ -107,13 +108,13 @@
                     containerTable.appendChild(elTable);
                     
                     // Create Table Body
-                    let elTableBody = document.createElement('tbody')
+                    let elTableBody = document.createElement('tbody');
                     
                     // Loop through stocks
                     oPromise.then(oUserStocks => {
                         if (oUserStocks) {
                             if (oUserStocks.length != 0) {
-                                elTable.innerHTML = "<thead class='table-dark'> \
+                                elTable.innerHTML = "<thead class='table-dark' style='background-color: #6610f2!important; position: sticky; top: 0;'> \
                                 <tr> \
                                     <th scope='col'>Name</th> \
                                     <th scope='col'>Quantity</th> \
@@ -174,31 +175,11 @@
                     };
                 };
 
-                // Fetch User Balance
-                async function getUserBalance(){
-                    let access = localStorage.getItem("access");
-                    if(access) {
-                        let response = await fetch("http://127.0.0.1:8000/users/current/", {
-                            method: 'GET',
-                            headers: {
-                                "Accept": "application/json",
-                                "Content-Type": "application/json",
-                                "Authorization": "Bearer " + access                                       
-                            },
-                        })
-                        let data = await response.json();
-                        return data;
-                    } else {
-                        //the user is not logged in,redirect them to the login page
-                        window.location.href = "/login";
-                    };
-                };
-
                 // Display User Balance
                 async function displayBalanceCard() {
                     const containerBalance = document.getElementById("ContainerBalance");
                     containerBalance.innerHTML = "";
-                    let userPromise = getUserBalance();
+                    let userPromise = getCurrentUser();
                     let elBalance = document.createElement('h5');
                     elBalance.className = "h5 mb-0 font-weight-bold text-gray-800";
                     userPromise.then(oUser => {
@@ -214,17 +195,17 @@
                 async function displayInvestedCard() {
                     const containerInvested = document.getElementById("ContainerInvested");
                     containerInvested.innerHTML = "";
-                    let temp;
+                    let temp = 0;
                     let oPromise = getUserStocks();
                     let elInvested = document.createElement('h5');
                     elInvested.className = "h5 mb-0 font-weight-bold text-gray-800";
                     oPromise.then(oUserStocks => {
                         if (oUserStocks) {
                             if (oUserStocks.length != 0) {
-                                console.log(oUserStocks);
                                 for (let i=0; i < oUserStocks.length; i++) {
                                     let oUserStock = oUserStocks[i];
-                                    temp = oUserStock.total_purchase_value;
+                                    let total = oUserStock.total_purchase_value;
+                                    temp += parseFloat(total);
                                 }
                                 elInvested.innerHTML = "€" + temp;
                             } else {
