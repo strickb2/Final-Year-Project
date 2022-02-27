@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+    <%- include('partials/head'); -%>
+    <body style="background-color: #FFF5EE;">
+        <!-- Navbar -->
+        <%- include('partials/nav'); -%>
+        <div class="container">
+            <br>
+            <div class="row">
+                <!-- Dummy Payment Section -->
+                <section>
+                    <h4 class="mb-3">Payment Details</h4>
+                    <form id="needs-validation">
+                        <div class="row">
+                            <!-- Card Name -->
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-name">Name on card</label>
+                                <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                                <small>Full name as displayed on card</small>
+                                <div class="invalid-feedback">
+                                    <div class="card bg-danger">
+                                        Name on card is required
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card Number -->
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-number">Credit card number</label>
+                                <input type="text" class="form-control" id="cc-number" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    <div class="card bg-danger">
+                                        Credit card number is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!--  Card Expiration Date -->
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-expiration">Expiration</label>
+                                <input type="month" class="form-control" id="cc-expiration" required>
+                                <div class="invalid-feedback">
+                                <div class="card bg-danger">
+                                    Expiration date required
+                                </div>
+                                </div>
+                            </div>
+            
+                            <!-- Card CVV Number -->
+                            <div class="col-md-3 mb-3">
+                                <label for="cc-expiration">CVV</label>
+                                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                                <div class="invalid-feedback">
+                                <div class="card bg-danger">
+                                    Security code required
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <button class="btn btn-primary btn-lg btn-block" type="submit" onclick="checkPaymentForm(); return false;">Submit</button> -->
+                    </form>
+                </section>
+                
+                <!-- <h4 class="mb-3">Add/Withdraw Funds</h4> -->
+                <ul style="list-style-type:none;">
+                    <li>
+                        <div class="card text-center">
+                            <div class="card-header bg-primary mb-3">
+                                Add Funds
+                            </div>
+                            <div class="card-body" style="width: 40rem;">
+                                <form id="AddFunds">
+                                    <input id="Add" class="form-control" type="number" style="width:100%" placeholder="0.00" max=9999.99 min=1.00 step="1.00">
+                                    <br>
+                                    <button class="btn btn-primary text-center" id="AddButton" style="width:100%" type="button" onclick="addBalance()">Add</button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card text-center">
+                            <div class="card-header bg-primary mb-3">
+                                Withdraw Funds
+                            </div>
+                            <div class="card-body" style="width: 40rem;">
+                                <form id="WithdrawFunds">
+                                    <!-- set max to user's balance -->
+                                    <input id="Withdraw" class="form-control" type="number" style="width:100%" placeholder="0.00" max=10000.00 min=1.00 step="1.00">
+                                    <br>
+                                    <button class="btn btn-primary text-center" id="WithdrawButton" style="width:100%" type="button" onclick="withdrawBalance()">Withdraw</button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <section>
+                <h4 class="mb-3 text-center">User Details</h4>
+                <div class="row">
+                    <!-- Name -->
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">Name</div>
+                            <div class="card-body">
+                                <div id="ContainerName"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Email Address -->
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">Email Address</div>
+                            <div class="card-body">
+                                <div id="ContainerEmail"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- Address -->
+                <div class="mb-3">
+                    <div class="card">
+                        <div class="card-header">Address</div>
+                        <div class="card-body">
+                            <div id="ContainerAddress"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Phone Number -->
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">Phone Number</div>
+                            <div class="card-body">
+                                <div id="ContainerPhone">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Username -->
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-header">Username</div>
+                        <div class="card-body">
+                            <div id="ContainerUsername">
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+            </section>
+        </div>
+
+        <script type="module">
+            import { getCurrentUser, createTransaction } from "/javascripts/data/fetchData.js"
+            import { navBar } from "/javascripts/partials/nav.js"
+
+            function validateExpiration(expiration) {
+                let today = new Date();
+                console.log(expiration);
+                console.log(today);
+                if (expiration < today) {
+                    alert("Expiration date is outdated.");
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            function validateCVV(cvv) {
+                let cvvRegex = /(^[0-9]{3}$)/g;
+                let cvvResult = cvvRegex.test(cvv);
+                return cvvResult;
+            }
+
+            function validateCardNumber(number) {
+                let numberRegex = /(^[0-9]{16}$)/g;
+                let numberResult = numberRegex.test(number);
+                return numberResult;
+            }
+
+            function checkPaymentForm() {
+                let buttonAdd = document.getElementById("AddButton");
+                let buttonWithdraw = document.getElementById("WithdrawButton");
+                
+                let name = document.getElementById("cc-name").value;
+                let number = document.getElementById("cc-number").value;
+                let expiration = document.getElementById("cc-expiration").value;
+                let cvv = document.getElementById("cc-cvv").value;
+
+                // If all fields are filled
+                if (name && validateCardNumber(number) && validateExpiration(expiration) && validateCVV(cvv)) {
+                    // Check field inputs are valid
+                    return true;
+                } else {
+                    // Print error for invalid fields
+                    if (number == "" || !validateCardNumber(number)) {
+                        alert("Please enter valid credit card number.");
+                    } else if (name == "") {
+                        alert("Please enter full name.");
+                    } else if (expiration == "") {
+                        alert("Please enter valid expiration date.")
+                    } else if (cvv == "" || !validateCVV(cvv)) {
+                        alert("Please enter valid CVV.");
+                    }
+                    return false;
+                }
+            }
+
+            // Add User Balance
+            async function addBalance() {
+                if (checkPaymentForm()) {
+                    let userPromise = getCurrentUser();
+                    userPromise.then(oUser => {
+                        if (oUser) {
+                            let data = {
+                                'user': oUser.id,
+                                'type': 4,
+                                'total': document.getElementById("Add").value
+                            };
+                            let bResponse = createTransaction(data);
+                            if (bResponse) {
+                                alert("Funds have been added to your account.");
+                                navBar();
+                            };
+                        }
+                    })
+                }
+            }
+
+            // Withdraw User Balance
+            async function withdrawBalance() {
+                if (checkPaymentForm()) {
+                    let userPromise = getCurrentUser();
+                    userPromise.then(oUser => {
+                        if (oUser) {
+                            let data = {
+                                'user': oUser.id,
+                                'type': 2,
+                                'total': document.getElementById("Withdraw").value
+                            };
+                            let bResponse = createTransaction(data);
+                            if (bResponse) {
+                                alert("Funds have been withdrawn from your account.");
+                                navBar();
+                            };
+                        }
+                    })
+                }
+            }
+
+            async function displayUserInfo() {
+                // Containers for user data
+                const divName = document.getElementById("ContainerName");
+                const divEmail = document.getElementById("ContainerEmail");
+                const divPhone = document.getElementById("ContainerPhone");
+                const divAddress = document.getElementById("ContainerAddress");
+                const divUsername = document.getElementById("ContainerUsername");
+
+                // User Data
+                let oPromise = getCurrentUser();
+                oPromise.then(oUser => {
+                    console.log(oUser);
+                    // Name
+                    let elName = document.createElement("p");
+                    elName.innerHTML = oUser.name
+                    elName.className = "card-text";
+
+                    // Address
+                    let elUserAddress = document.createElement("p");
+                    elUserAddress.innerHTML = oUser.address
+                    elUserAddress.className = "card-text";
+
+                    // Email
+                    let elUserEmail = document.createElement("p");
+                    elUserEmail.innerHTML = oUser.email
+                    elUserEmail.className = "card-text";
+
+                    // Phone
+                    let elUserPhone = document.createElement("p");
+                    elUserPhone.innerHTML = oUser.phone_number
+                    elUserPhone.className = "card-text";
+
+                    // Username
+                    let elUsername = document.createElement("p");
+                    elUsername.innerHTML = oUser.username
+                    elUsername.className = "card-text";
+
+                    divName.append(elName);
+                    divEmail.append(elUserEmail);
+                    divAddress.append(elUserAddress);
+                    divPhone.append(elUserPhone);
+                    divUsername.append(elUsername);
+                })
+            }
+
+            function init() {
+                navBar();
+                displayUserInfo();
+            }
+
+            window.addBalance = addBalance;
+            window.withdrawBalance = withdrawBalance;
+            window.checkPaymentForm = checkPaymentForm;
+
+            init();
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="https://netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script>
+    </body>
+</html>
