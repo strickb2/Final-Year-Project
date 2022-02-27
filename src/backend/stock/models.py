@@ -54,7 +54,7 @@ class StockTransaction(models.Model):
         return "T" + str(self.transaction_id.id) + ": " + self.stock_id.name + " at " + str(self.stock_price)
     
     def quantity(self):
-        return round(float(self.transaction_id.total / self.stock_price), 8)
+        return round(float(self.transaction_id.total / self.stock_price), 14)
 
 class StockBalance(models.Model):
     id = models.AutoField(primary_key=True)
