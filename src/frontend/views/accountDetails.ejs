@@ -7,7 +7,7 @@
             <br>
             <div class="row">
                 <!-- Dummy Payment Section -->
-                <section>
+                <div class="col-md-6">
                     <h4 class="mb-3">Payment Details</h4>
                     <form id="needs-validation">
                         <div class="row">
@@ -16,22 +16,12 @@
                                 <label for="cc-name">Name on card</label>
                                 <input type="text" class="form-control" id="cc-name" placeholder="" required>
                                 <small>Full name as displayed on card</small>
-                                <div class="invalid-feedback">
-                                    <div class="card bg-danger">
-                                        Name on card is required
-                                    </div>
-                                </div>
                             </div>
 
                             <!-- Card Number -->
                             <div class="col-md-6 mb-3">
                                 <label for="cc-number">Credit card number</label>
                                 <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    <div class="card bg-danger">
-                                        Credit card number is required
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
@@ -40,60 +30,53 @@
                             <div class="col-md-6 mb-3">
                                 <label for="cc-expiration">Expiration</label>
                                 <input type="month" class="form-control" id="cc-expiration" required>
-                                <div class="invalid-feedback">
-                                <div class="card bg-danger">
-                                    Expiration date required
-                                </div>
-                                </div>
                             </div>
             
                             <!-- Card CVV Number -->
                             <div class="col-md-3 mb-3">
-                                <label for="cc-expiration">CVV</label>
-                                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                                <div class="invalid-feedback">
-                                <div class="card bg-danger">
-                                    Security code required
-                                </div>
-                                </div>
+                                <label for="cc-cvv">CVV</label>
+                                <input type="text" class="form-control" id="cc-cvv" required>
                             </div>
                         </div>
                         <!-- <button class="btn btn-primary btn-lg btn-block" type="submit" onclick="checkPaymentForm(); return false;">Submit</button> -->
                     </form>
-                </section>
-                
-                <!-- <h4 class="mb-3">Add/Withdraw Funds</h4> -->
-                <ul style="list-style-type:none;">
-                    <li>
-                        <div class="card text-center">
-                            <div class="card-header bg-primary mb-3">
-                                Add Funds
-                            </div>
-                            <div class="card-body" style="width: 40rem;">
-                                <form id="AddFunds">
-                                    <input id="Add" class="form-control" type="number" style="width:100%" placeholder="0.00" max=9999.99 min=1.00 step="1.00">
-                                    <br>
-                                    <button class="btn btn-primary text-center" id="AddButton" style="width:100%" type="button" onclick="addBalance()">Add</button>
-                                </form>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card text-center">
-                            <div class="card-header bg-primary mb-3">
-                                Withdraw Funds
-                            </div>
-                            <div class="card-body" style="width: 40rem;">
-                                <form id="WithdrawFunds">
-                                    <!-- set max to user's balance -->
-                                    <input id="Withdraw" class="form-control" type="number" style="width:100%" placeholder="0.00" max=10000.00 min=1.00 step="1.00">
-                                    <br>
-                                    <button class="btn btn-primary text-center" id="WithdrawButton" style="width:100%" type="button" onclick="withdrawBalance()">Withdraw</button>
-                                </form>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card shadow text-center" style="color: #6610f2!important; height:207px;">
+                                <div id="AddFundsHeader">
+                                    Add Funds
+                                </div>
+                                <div class="card-body">
+                                    <form id="AddFunds">
+                                        <input id="Add" class="form-control" type="number" style="width:100%" placeholder="0.00" max=9999.99 min=1.00 step="1.00">
+                                        <br>
+                                        <button class="btn btn-primary text-center" id="AddButton" style="width:100%" type="button" onclick="addBalance()">Add</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </li>
-                </ul>
+                        <div class="col-6">
+                            <div class="card shadow text-center" style="color: #6610f2!important; height:207px;">
+                                <div id="WithdrawFundsHeader">
+                                    Withdraw Funds
+                                </div>
+                                <div class="card-body">
+                                    <form id="WithdrawFunds">
+                                        <!-- set max to user's balance -->
+                                        <input id="Withdraw" class="form-control" type="number" style="width:100%" placeholder="0.00" max=10000.00 min=1.00 step="1.00">
+                                        <br>
+                                        <button class="btn btn-primary text-center" id="WithdrawButton" style="width:100%" type="button" onclick="withdrawBalance()">Withdraw</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <p><i>*A Stripe fee of €0.25 and 1.4% of transaction value will be applied.</i></p>
+                    </div>
+                </div>
             </div>
 
             <section>
@@ -156,16 +139,16 @@
             </section>
         </div>
 
-        <script type="module">
+        <script defer type="module">
             import { getCurrentUser, createTransaction } from "/javascripts/data/fetchData.js"
             import { navBar } from "/javascripts/partials/nav.js"
 
             function validateExpiration(expiration) {
                 let today = new Date();
-                console.log(expiration);
-                console.log(today);
-                if (expiration < today) {
-                    alert("Expiration date is outdated.");
+                let someday = new Date();
+                let dateString = expiration.split("-");
+                someday.setFullYear(dateString[0], dateString[1], 1);
+                if (someday < today) {
                     return false;
                 } else {
                     return true;
@@ -185,9 +168,6 @@
             }
 
             function checkPaymentForm() {
-                let buttonAdd = document.getElementById("AddButton");
-                let buttonWithdraw = document.getElementById("WithdrawButton");
-                
                 let name = document.getElementById("cc-name").value;
                 let number = document.getElementById("cc-number").value;
                 let expiration = document.getElementById("cc-expiration").value;
@@ -203,7 +183,7 @@
                         alert("Please enter valid credit card number.");
                     } else if (name == "") {
                         alert("Please enter full name.");
-                    } else if (expiration == "") {
+                    } else if (expiration == "" || !validateExpiration(expiration)) {
                         alert("Please enter valid expiration date.")
                     } else if (cvv == "" || !validateCVV(cvv)) {
                         alert("Please enter valid CVV.");
@@ -261,11 +241,11 @@
                 const divPhone = document.getElementById("ContainerPhone");
                 const divAddress = document.getElementById("ContainerAddress");
                 const divUsername = document.getElementById("ContainerUsername");
+                
 
                 // User Data
                 let oPromise = getCurrentUser();
                 oPromise.then(oUser => {
-                    console.log(oUser);
                     // Name
                     let elName = document.createElement("p");
                     elName.innerHTML = oUser.name
@@ -300,6 +280,21 @@
             }
 
             function init() {
+                let divAddFundsHeader = document.getElementById("AddFundsHeader");
+                let divWithdrawFundsHeader = document.getElementById("WithdrawFundsHeader");
+
+                divAddFundsHeader.class="card-header";
+                divAddFundsHeader.style = "border-left:0.25rem solid #6610f2!important;";
+                divAddFundsHeader.innerHTML = "<p class='mb-0 ml-4 mt-2'>Add Funds <svg class='float-right' xmlns='http://www.w3.org/2000/svg' width='28' height='28' fill='currentColor' class='bi bi-plus' viewBox='0 0 16 16'> \
+                <path d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z'/> \
+                </svg></p>";
+
+                divWithdrawFundsHeader.class="card-header";
+                divWithdrawFundsHeader.style = "border-left:0.25rem solid #6610f2!important;";
+                divWithdrawFundsHeader.innerHTML = "<p class='mb-0 ml-4 mt-2'>Withdraw Funds <svg class='float-right' xmlns='http://www.w3.org/2000/svg' width='28' height='28' fill='currentColor' class='bi bi-dash' viewBox='0 0 16 16'> \
+                <path d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z'/> \
+                </svg></p>";
+
                 navBar();
                 displayUserInfo();
             }
@@ -313,5 +308,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="https://netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script>
+        <!-- Footer -->
+        <%- include('partials/footer'); -%>
     </body>
 </html>
