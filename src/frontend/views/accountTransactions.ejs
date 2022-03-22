@@ -6,7 +6,6 @@
 
         <!-- Container -->
         <div class="container">
-    
             <!-- Title -->
             <section class="text-center container">
                 <div class="row py-lg-5">
@@ -49,7 +48,7 @@
             // Display Transaction Table
             async function displayTable() {
                 const balanceTable = document.getElementById("BalanceTable");
-                balanceTable.style = "overflow: auto; height: 1000px; display: block;";
+                balanceTable.style = "overflow: auto; height: 450px; display: block;";
                 let oPromise = getUserTransactions();
 
                 
@@ -93,19 +92,20 @@
 
                             // Transaction Type
                             let stockType = document.createElement("td");
-                            if (oStock.type == 1 || oStock.type == 3) {
-                                if (oStock.type == 1) {
-                                    stockType.innerHTML = "Buy";
-                                } else {
-                                    stockType.innerHTML = "Sell";
-                                }                     
-                            } else {
-                                if (oStock.type == 2) {
-                                    stockType.innerHTML = "Withdraw";
-                                } else {
-                                    stockType.innerHTML = "Add";
-                                }
+                            if (oStock.type == 1) {
+                                stockType.innerHTML = "Buy";
+                            } else if (oStock.type == 3) {
+                                stockType.innerHTML = "Sell";
+                            } else if (oStock.type == 2) {
+                                stockType.innerHTML = "Withdraw";
+                            } else if (oStock.type == 4) {
+                                stockType.innerHTML = "Add";
+                            } else if (oStock.type == 5) {
+                                stockType.innerHTML = "Stripe";
+                            } else if (oStock.type == 6) {
+                                stockType.innerHTML = "Commission";
                             }
+                            // Add Stripe5 + Commission6 Types
                             containerBalance.appendChild(stockType);
 
                             // Stock Name + Quantity
@@ -113,7 +113,7 @@
                             let stockQuantity = document.createElement("td");
                             let stock = oStock.stock;
                             if (stock != null) {
-                                stockName.innerHTML = stock.stock_id.name;
+                                stockName.innerHTML = stock.stock_name;
                                 stockQuantity.innerHTML = stock.quantity;
                             } else {
                                 stockName.innerHTML = "-";
