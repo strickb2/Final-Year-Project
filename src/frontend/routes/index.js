@@ -22,6 +22,10 @@ router.get('/leaderboard', function(req, res, next){
   res.render('leaderboard', { title: 'StockCompete | Leaderboard' })
 });
 
+router.get('/about', function(req, res, next){
+  res.render('about', { title: 'StockCompete | About' })
+});
+
 router.get('/account/dashboard', function(req, res, next){
   res.render('accountDashboard', { title: 'StockCompete | Dashboard' })
 });
