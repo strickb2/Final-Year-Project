@@ -6,6 +6,10 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'StockCompete' });
 });
 
+router.get('/welcome', function(req, res, next){
+  res.render('welcome', { title: 'StockCompete | Welcome' })
+});
+
 router.get('/login', function(req, res, next){
   res.render('login', { title: 'StockCompete | Login' })
 });
