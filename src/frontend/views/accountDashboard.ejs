@@ -208,7 +208,7 @@
                                     let total = oUserStock.total_purchase_value;
                                     temp += parseFloat(total);
                                 }
-                                elInvested.innerHTML = "€" + temp;
+                                elInvested.innerHTML = "€" + temp.toFixed(2);
                             } else {
                                 elInvested.innerHTML = "€0.00";
                             }
