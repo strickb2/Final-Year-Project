@@ -6,7 +6,7 @@ export async function fetchData(url) {
 
 export async function fetchAuthenticatedData(url) {
     let sToken = localStorage.getItem('access');
-    let reponse = await fetch(url, {
+    let response = await fetch(url, {
         method: 'GET',
         headers: {
             "Accept": "application/json",
@@ -14,7 +14,7 @@ export async function fetchAuthenticatedData(url) {
             "Authorization": "Bearer " + sToken,
         },
     });
-    let data = await reponse.json();
+    let data = await response.json();
     return data;
 }
 
@@ -90,6 +90,19 @@ export function getNewsArticles(query) {
 export function getCurrentUser() {
     return fetchAuthenticatedData("http://127.0.0.1:8000/users/current/");
 };
+
+export async function getCurrentUserStatus() {
+    let sToken = localStorage.getItem('access');
+    let response = await fetch("http://127.0.0.1:8000/users/current/", {
+        method: 'GET',
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + sToken,
+        },
+    });
+    return await response;
+}
 
 export function getStockBalance(stockId=null) {
     if (stockId === null) {

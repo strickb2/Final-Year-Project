@@ -139,8 +139,9 @@
         </div>
 
         <script defer type="module">
-            import { getCurrentUser, createTransaction } from "/javascripts/data/fetchData.js"
-            import { navBar } from "/javascripts/partials/nav.js"
+            import { getCurrentUser, createTransaction } from "/javascripts/data/fetchData.js";
+            import { navBar } from "/javascripts/partials/nav.js";
+            import { userIsSignedIn } from '/javascripts/helpers/userIsSignedIn.js';
 
             function validateExpiration(expiration) {
                 let today = new Date();
@@ -278,24 +279,31 @@
                 })
             }
 
-            function init() {
-                let divAddFundsHeader = document.getElementById("AddFundsHeader");
-                let divWithdrawFundsHeader = document.getElementById("WithdrawFundsHeader");
+            async function init() {
+                let statusSignIn = await userIsSignedIn();
 
-                divAddFundsHeader.class="card-header";
-                divAddFundsHeader.style = "border-left:0.25rem solid #6610f2!important;";
-                divAddFundsHeader.innerHTML = "<p class='mb-0 ml-4 mt-2'>Add Funds <svg class='float-right' xmlns='http://www.w3.org/2000/svg' width='28' height='28' fill='currentColor' class='bi bi-plus' viewBox='0 0 16 16'> \
-                <path d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z'/> \
-                </svg></p>";
+                if (statusSignIn) {
+                    let divAddFundsHeader = document.getElementById("AddFundsHeader");
+                    let divWithdrawFundsHeader = document.getElementById("WithdrawFundsHeader");
 
-                divWithdrawFundsHeader.class="card-header";
-                divWithdrawFundsHeader.style = "border-left:0.25rem solid #6610f2!important;";
-                divWithdrawFundsHeader.innerHTML = "<p class='mb-0 ml-4 mt-2'>Withdraw Funds <svg class='float-right' xmlns='http://www.w3.org/2000/svg' width='28' height='28' fill='currentColor' class='bi bi-dash' viewBox='0 0 16 16'> \
-                <path d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z'/> \
-                </svg></p>";
+                    divAddFundsHeader.class="card-header";
+                    divAddFundsHeader.style = "border-left:0.25rem solid #6610f2!important;";
+                    divAddFundsHeader.innerHTML = "<p class='mb-0 ml-4 mt-2'>Add Funds <svg class='float-right' xmlns='http://www.w3.org/2000/svg' width='28' height='28' fill='currentColor' class='bi bi-plus' viewBox='0 0 16 16'> \
+                    <path d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z'/> \
+                    </svg></p>";
 
-                navBar();
-                displayUserInfo();
+                    divWithdrawFundsHeader.class="card-header";
+                    divWithdrawFundsHeader.style = "border-left:0.25rem solid #6610f2!important;";
+                    divWithdrawFundsHeader.innerHTML = "<p class='mb-0 ml-4 mt-2'>Withdraw Funds <svg class='float-right' xmlns='http://www.w3.org/2000/svg' width='28' height='28' fill='currentColor' class='bi bi-dash' viewBox='0 0 16 16'> \
+                    <path d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z'/> \
+                    </svg></p>";
+
+                    navBar();
+                    displayUserInfo();
+                } else {
+                    // the user is not logged in,redirect them to the login page
+                    window.location.href = "/login";
+                }
             }
 
             window.addBalance = addBalance;

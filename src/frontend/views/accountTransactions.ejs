@@ -24,7 +24,9 @@
 
         <!-- Javascript -->
         <script defer type="module">
-            import { navBar } from "/javascripts/partials/nav.js"
+            import { navBar } from "/javascripts/partials/nav.js";
+            import { userIsSignedIn } from '/javascripts/helpers/userIsSignedIn.js';
+
             // Fetch User Transactions
             async function getUserTransactions(){
                 let access = localStorage.getItem("access");
@@ -139,8 +141,15 @@
             }
 
             async function init() {
-                displayTable();
-                navBar();
+                let statusSignIn = await userIsSignedIn();
+
+                if (statusSignIn) {
+                    displayTable();
+                    navBar();
+                } else {
+                    // the user is not logged in,redirect them to the login page
+                    window.location.href = "/login";
+                }
             }
 
             init();

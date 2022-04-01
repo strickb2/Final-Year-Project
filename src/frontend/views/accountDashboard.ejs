@@ -92,8 +92,9 @@
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
             <script defer type="module">
-                import { createTransaction, getLeaderboard, getCurrentUser } from "/javascripts/data/fetchData.js"
-                import { navBar } from "/javascripts/partials/nav.js"
+                import { createTransaction, getLeaderboard, getCurrentUser } from "/javascripts/data/fetchData.js";
+                import { navBar } from "/javascripts/partials/nav.js";
+                import { userIsSignedIn } from '/javascripts/helpers/userIsSignedIn.js';
 
                 const containerBalance = document.getElementById("AddFunds");
                 // Fetch User Table (Total Investment, Current Value) (under graph)
@@ -259,29 +260,35 @@
                     })
                 }
 
-                async function init() {    
-                    navBar();   
-                    let temp = {
-                        x_val: [],
-                        y_val: []
-                    };
-                    let oPromise = getUserStocks();
-                    oPromise.then(oUserStocks => {
-                        if (oUserStocks) {
-                            for (let oUserID in oUserStocks) {
-                                let oUserStock = oUserStocks[oUserID];
-                                temp.y_val.push(oUserStock.total_purchase_value);
-                                temp.x_val.push(oUserStock.stock_id.name);
+                async function init() {
+                    let statusSignIn = await userIsSignedIn();
+                    if (statusSignIn) {
+                        navBar();   
+                        let temp = {
+                            x_val: [],
+                            y_val: []
+                        };
+                        let oPromise = getUserStocks();
+                        oPromise.then(oUserStocks => {
+                            if (oUserStocks) {
+                                for (let oUserID in oUserStocks) {
+                                    let oUserStock = oUserStocks[oUserID];
+                                    temp.y_val.push(oUserStock.total_purchase_value);
+                                    temp.x_val.push(oUserStock.stock_id.name);
+                                }
+                                drawBarGraph(temp);
                             }
-                            drawBarGraph(temp);
-                        }
 
-                        displayBalanceCard();
-                        displayInvestedCard();
-                        displayCompaniesCard();
-                        displayLeaderboardCard();
-                        displayTable();
-                    })
+                            displayBalanceCard();
+                            displayInvestedCard();
+                            displayCompaniesCard();
+                            displayLeaderboardCard();
+                            displayTable();
+                        });
+                    } else {
+                        // the user is not logged in,redirect them to the login page
+                        window.location.href = "/login";
+                    }
                 }
 
                 // Script for Graph

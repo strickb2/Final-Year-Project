@@ -10,7 +10,6 @@ export function displayContainerListStocks(oData) {
     cardListStocks.className = "card";
 
     if (oData.length != 0) {
-        console.log(oData);
         // If there is data returned create a table
         let tableStockList = document.createElement("table");
         tableStockList.className = "table table-hover mb-0";
