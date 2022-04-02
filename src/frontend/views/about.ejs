@@ -4,50 +4,48 @@
         <!-- Navbar -->
         <%- include('partials/nav'); -%>
 
+        <div style="text-align: center; padding: 50px">
+            <h1>About Us Page</h1>
+            <p>Below you will find more information about us and our work.</p>
+            <p>Scanning the QR codes will take you to our respective LinkedIn pages.</p>
+        </div>
+        
         <div class="container">
-            <br>
-            <h2 class="mb-3 text-center">About Us</h2>
-            <div class="row">
-                <!-- Ben -->
-                <div class="col-md-6 mb-3">
-                    <div class="card">
-                        <div class="card-header">Ben Strickland</div>
-                        <div class="card-body">
-                            <div class="row">
-                                <img src="/images/ben.jpg" height="200" width="200">
-                                <p class="ml-1">Course: Enterprise Computing<br>GitHub: https://github.com/strickb2</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">Ben's LinkedIn</div>
-                        <div class="card-body">
-                            <img style="display: block; margin-left: auto; margin-right: auto;" src="/images/benqr.png" height="180" width="180">
-                        </div>
-                    </div>
+            <div class="row ml-4">
+                <img class="rounded-circle" style="display: block; margin-left: auto; margin-right: auto; width:220px; height:200px;" src="/images/ben.jpg" alt="Ben">
+                <div class="col text-center">
+                    <br><br>
+                    <h1>Ben Strickland</h1>
+                    <p>Course: Enterprise Computing</p>
+                    <p>Experience: ESW Software Development Intern</p>
                 </div>
+                <div class="col">
+                    <img style="display: block; margin-left: auto; margin-right: auto; width:220px; height:200px;" src="/images/benqr.png" alt="Ben QR">
+                </div>
+            </div>
 
-                <!-- Aaron -->
-                <div class="col-md-6 mb-3">
-                    <div class="card">
-                        <div class="card-header">Aaron Nolan</div>
-                        <div class="card-body">
-                            <div class="row">
-                                <img src="/images/aaron.jpg" height="200" width="200">
-                                <p class="ml-1">Course: Enterprise Computing<br>GitHub: https://github.com/AaronNolan</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">Aaron's LinkedIn</div>
-                        <div class="card-body">
-                            <img style="display: block; margin-left: auto; margin-right: auto;" src="/images/aaronqr.png" height="180" width="180">
-                        </div>
-                    </div>
+            <br>
+            <div class="row ml-4">
+                <img class="rounded-circle" style="display: block; margin-left: auto; margin-right: auto; width:220px; height:200px;" src="/images/aaron.jpg" alt="Aaron">
+                <div class="col text-center">
+                    <br><br>
+                    <h2>Aaron Nolan</h2>
+                    <p>Course: Enterprise Computing</p>
+                    <p>Experience: SAP Software Development Intern</p>
+                </div>
+                <div class="col">
+                    <img style="display: block; margin-left: auto; margin-right: auto; width:220px; height:200px;" src="/images/aaronqr.png" alt="Aaron QR">
                 </div>
             </div>
         </div>
 
+        <script type="module">
+            function styling() {
+                let aboutSection = document.getElementById("about-section");
+
+                aboutSection.style = ""
+            }
+        </script>
         <script defer type="module">
             import { navBar } from "/javascripts/partials/nav.js"
             navBar();
