@@ -57,7 +57,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
         if user.is_superuser:
             return Transaction.objects.all()
         else:
-            return Transaction.objects.filter(user_id=user.id)
+            return Transaction.objects.filter(user_id=user.id).order_by("-datetime")
 
 class StockBalanceViewSet(viewsets.ModelViewSet):
     '''
