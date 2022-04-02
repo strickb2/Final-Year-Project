@@ -49,7 +49,7 @@ class Registration(APITestCase):
 class GetCurrentUser(APITestCase):
 
     def setUp(self):
-        self.user = APIUser.objects.create_user(username="TestCase", password="test", dob="2000-05-07", address="qwe dsfsdfd", email="test@mail.com")
+        self.user = APIUser.objects.create_user(username="TestCase", password="test", dob="2000-05-07", address="123 lane rd", email="test@mail.com")
 
     def authenticate(self):
         response = self.client.post(reverse('token_obtain_pair'), {'username': 'TestCase', 'password': 'test'})
