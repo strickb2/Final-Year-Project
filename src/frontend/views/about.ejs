@@ -4,39 +4,57 @@
         <!-- Navbar -->
         <%- include('partials/nav'); -%>
 
-        <div style="text-align: center; padding: 50px">
-            <h1>About Us Page</h1>
-            <p>Below you will find more information about us and our work.</p>
-            <p>Scanning the QR codes will take you to our respective LinkedIn pages.</p>
+        <div style="text-align: center; padding-top: 40px">
+            <h1 class="display-4 mb-4">About Us</h1>
         </div>
         
         <div class="container">
-            <div class="row ml-4">
-                <img class="rounded-circle" style="display: block; margin-left: auto; margin-right: auto; width:220px; height:200px;" src="/images/ben.jpg" alt="Ben">
-                <div class="col text-center">
-                    <br><br>
-                    <h1>Ben Strickland</h1>
-                    <p>Course: Enterprise Computing</p>
-                    <p>Experience: ESW Software Development Intern</p>
-                </div>
-                <div class="col">
-                    <img style="display: block; margin-left: auto; margin-right: auto; width:220px; height:200px;" src="/images/benqr.png" alt="Ben QR">
-                </div>
-            </div>
+            <hr class="mb-4" style="height:3px; width:5%; background-image: linear-gradient(to right top, #0038ff, #2831ff, #3b27ff, #4b1aff, #5800ff);">
+            
+            <div class="card text-white rounded p-4" style="background-image: linear-gradient(to right top, #0038ff, #2831ff, #3b27ff, #4b1aff, #5800ff);">
+                <div class="row">
+                    <div class="col-3 align-items-center d-flex">
+                        <img class="rounded-circle" style="display: block; margin-left: auto; margin-right: auto; width:190px; height:190px;" src="/images/ben.jpg" alt="Ben">
+                    </div>
+                    <div class="col-5 pt-3">
+                        <h2>Ben Strickland</h2>
+                        
+                        <h4 class="lead">Degree</h4>
+                        <p><i>Enterprise Computing</i></p>
 
-            <br>
-            <div class="row ml-4">
-                <img class="rounded-circle" style="display: block; margin-left: auto; margin-right: auto; width:220px; height:200px;" src="/images/aaron.jpg" alt="Aaron">
-                <div class="col text-center">
-                    <br><br>
-                    <h2>Aaron Nolan</h2>
-                    <p>Course: Enterprise Computing</p>
-                    <p>Experience: SAP Software Development Intern</p>
-                </div>
-                <div class="col">
-                    <img style="display: block; margin-left: auto; margin-right: auto; width:220px; height:200px;" src="/images/aaronqr.png" alt="Aaron QR">
+                        <h3 class="lead">Experience</h3>
+                        <p><i>ESW Software Development Intern</i></p>
+                    </div>
+                    <div class="col-4">
+                        <h4 class="text-center">LinkedIn</h4>
+                        <img style="display: block; margin-left: auto; margin-right: auto; width:190px; height:190px;" src="/images/benqr.png" alt="Ben QR">
+                    </div>
                 </div>
             </div>
+            
+            <br>
+            
+            <div class="card text-white rounded p-4" style="background-image: linear-gradient(to right top, #0038ff, #2831ff, #3b27ff, #4b1aff, #5800ff);">
+                <div class="row">
+                    <div class="col-3 align-items-center d-flex">
+                        <img class="rounded-circle" style="display: block; margin-left: auto; margin-right: auto; width:190px; height:190px;" src="/images/aaron.jpg" alt="Aaron">
+                    </div>
+                    <div class="col-5 pt-3">
+                        <h2>Aaron Nolan</h2>
+                        
+                        <h4 class="lead">Degree</h4>
+                        <p><i>Enterprise Computing</i></p>
+
+                        <h3 class="lead">Experience</h3>
+                        <p><i>SAP Software Development Intern</i></p>
+                    </div>
+                    <div class="col-4">
+                        <h4 class="text-center">LinkedIn</h4>
+                        <img style="display: block; margin-left: auto; margin-right: auto; width:190px; height:190px;" src="/images/aaronqr.png" alt="Aaron QR">
+                    </div>
+                </div>
+            </div>
+            <br>
         </div>
 
         <script type="module">
