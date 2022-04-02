@@ -26,7 +26,12 @@ export function navBar() {
         // Get User
         oUserPromise.then(oUser => {
             navItemAccountBalance.innerHTML = '<li class="nav-item"> \
-            <a class="btn btn-primary mr-2" href="/account/dashboard/">€' + oUser.balance + '</a> \
+            <a class="btn btn-primary mr-2" href="/account/dashboard/"> \
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bank pb-1" viewBox="0 0 16 16"> \
+                    <path d="M8 .95 14.61 4h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.379l.5 2A.5.5 0 0 1 15.5 17H.5a.5.5 0 0 1-.485-.621l.5-2A.5.5 0 0 1 1 14V7H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 4h.89L8 .95zM3.776 4h8.447L8 2.05 3.776 4zM2 7v7h1V7H2zm2 0v7h2.5V7H4zm3.5 0v7h1V7h-1zm2 0v7H12V7H9.5zM13 7v7h1V7h-1zm2-1V5H1v1h14zm-.39 9H1.39l-.25 1h13.72l-.25-1z"/> \
+                </svg> \
+                <span class="text-white">€' + oUser.balance + '</span> \
+                </a> \
             </li>';
             let oLeaderboardPromise = getLeaderboard();
             // Get Leaderboard
@@ -36,7 +41,7 @@ export function navBar() {
                     // If user is current user
                     if (oLeaderboard[sId].user_id.id === oUser.id) {
                         navItemLeaderboard.innerHTML = '<li class="nav-item"> \
-                            <a class="btn btn-warning mr-2" href="/leaderboard/"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trophy-fill" viewBox="0 0 16 16"> \
+                            <a class="btn btn-warning mr-2" href="/leaderboard/"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trophy-fill pb-1" viewBox="0 0 16 16"> \
                             <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935z"/> \
                             </svg> <span class="badge rounded-pill bg-white text-dark">' + oLeaderboard[sId].points + ' points</span> </a> \
                             </li>';
