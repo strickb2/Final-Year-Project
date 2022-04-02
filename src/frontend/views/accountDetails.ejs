@@ -3,145 +3,149 @@
     <body style="background-color: #FFF5EE;">
         <!-- Navbar -->
         <%- include('partials/nav'); -%>
-        <div class="container">
-            <br>
-            <div class="row">
-                <!-- Dummy Payment Section -->
-                <div class="col-md-6">
-                    <h4 class="mb-3">Payment Details</h4>
-                    <form id="needs-validation">
-                        <div class="row">
-                            <!-- Card Name -->
-                            <div class="col-md-6 mb-3">
-                                <label for="cc-name">Name on card</label>
-                                <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                                <small>Full name as displayed on card</small>
-                            </div>
-
-                            <!-- Card Number -->
-                            <div class="col-md-6 mb-3">
-                                <label for="cc-number">Credit card number</label>
-                                <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <!--  Card Expiration Date -->
-                            <div class="col-md-6 mb-3">
-                                <label for="cc-expiration">Expiration</label>
-                                <input type="month" class="form-control" id="cc-expiration" required>
-                            </div>
-            
-                            <!-- Card CVV Number -->
-                            <div class="col-md-3 mb-3">
-                                <label for="cc-cvv">CVV</label>
-                                <input type="text" class="form-control" id="cc-cvv" required>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="card shadow text-center" style="color: #6610f2!important; height:207px;">
-                                <div id="AddFundsHeader">
-                                    Add Funds
-                                </div>
-                                <div class="card-body">
-                                    <form id="AddFunds">
-                                        <input id="Add" class="form-control" type="number" style="width:100%" placeholder="0.00" max=9999.99 min=1.00 step="1.00">
-                                        <br>
-                                        <button class="btn btn-primary text-center" id="AddButton" style="width:100%" type="button" onclick="addBalance()">Add</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="card shadow text-center" style="color: #6610f2!important; height:207px;">
-                                <div id="WithdrawFundsHeader">
-                                    Withdraw Funds
-                                </div>
-                                <div class="card-body">
-                                    <form id="WithdrawFunds">
-                                        <!-- set max to user's balance -->
-                                        <input id="Withdraw" class="form-control" type="number" style="width:100%" placeholder="0.00" max=10000.00 min=1.00 step="1.00">
-                                        <br>
-                                        <button class="btn btn-primary text-center" id="WithdrawButton" style="width:100%" type="button" onclick="withdrawBalance()">Withdraw</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 mt-2">
-                        <p><i>*A Stripe fee of €0.25 and 1.4% of transaction value will be applied.</i></p>
-                    </div>
-                </div>
-            </div>
-
-            <section>
-                <h4 class="mb-3 text-center">User Details</h4>
-                <div class="row">
-                    <!-- Name -->
-                    <div class="col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">Name</div>
-                            <div class="card-body">
-                                <div id="ContainerName"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Email Address -->
-                    <div class="col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">Email Address</div>
-                            <div class="card-body">
-                                <div id="ContainerEmail"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                
-                <!-- Address -->
-                <div class="mb-3">
-                    <div class="card">
-                        <div class="card-header">Address</div>
-                        <div class="card-body">
-                            <div id="ContainerAddress"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <!-- Phone Number -->
-                    <div class="col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">Phone Number</div>
-                            <div class="card-body">
-                                <div id="ContainerPhone">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Username -->
-                <div class="col-md-6 mb-3">
-                    <div class="card">
-                        <div class="card-header">Username</div>
-                        <div class="card-body">
-                            <div id="ContainerUsername">
-                        </div>
-                    </div>
-                </div>
+        <div class="col-12 row">
+            <%- include('partials/sidenav'); -%>
+            <div class="container">
                 <br>
+                <div class="row">
+                    <!-- Dummy Payment Section -->
+                    <div class="col-md-6">
+                        <h4 class="mb-3">Payment Details</h4>
+                        <form id="needs-validation">
+                            <div class="row">
+                                <!-- Card Name -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="cc-name">Name on card</label>
+                                    <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                                    <small>Full name as displayed on card</small>
+                                </div>
 
-            </section>
+                                <!-- Card Number -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="cc-number">Credit card number</label>
+                                    <input type="text" class="form-control" id="cc-number" placeholder="" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!--  Card Expiration Date -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="cc-expiration">Expiration</label>
+                                    <input type="month" class="form-control" id="cc-expiration" required>
+                                </div>
+                
+                                <!-- Card CVV Number -->
+                                <div class="col-md-3 mb-3">
+                                    <label for="cc-cvv">CVV</label>
+                                    <input type="text" class="form-control" id="cc-cvv" required>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="card shadow text-center" style="color: #6610f2!important; height:207px;">
+                                    <div id="AddFundsHeader">
+                                        Add Funds
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="AddFunds">
+                                            <input id="Add" class="form-control" type="number" style="width:100%" placeholder="0.00" max=9999.99 min=1.00 step="1.00">
+                                            <br>
+                                            <button class="btn btn-primary text-center" id="AddButton" style="width:100%" type="button" onclick="addBalance()">Add</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="card shadow text-center" style="color: #6610f2!important; height:207px;">
+                                    <div id="WithdrawFundsHeader">
+                                        Withdraw Funds
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="WithdrawFunds">
+                                            <!-- set max to user's balance -->
+                                            <input id="Withdraw" class="form-control" type="number" style="width:100%" placeholder="0.00" max=10000.00 min=1.00 step="1.00">
+                                            <br>
+                                            <button class="btn btn-primary text-center" id="WithdrawButton" style="width:100%" type="button" onclick="withdrawBalance()">Withdraw</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <p><i>*A Stripe fee of €0.25 and 1.4% of transaction value will be applied.</i></p>
+                        </div>
+                    </div>
+                </div>
+
+                <section>
+                    <h4 class="mb-3 text-center">User Details</h4>
+                    <div class="row">
+                        <!-- Name -->
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-header">Name</div>
+                                <div class="card-body">
+                                    <div id="ContainerName"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email Address -->
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-header">Email Address</div>
+                                <div class="card-body">
+                                    <div id="ContainerEmail"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <!-- Address -->
+                    <div class="mb-3">
+                        <div class="card">
+                            <div class="card-header">Address</div>
+                            <div class="card-body">
+                                <div id="ContainerAddress"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Phone Number -->
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-header">Phone Number</div>
+                                <div class="card-body">
+                                    <div id="ContainerPhone">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Username -->
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">Username</div>
+                            <div class="card-body">
+                                <div id="ContainerUsername">
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                </section>
+            </div>
         </div>
 
         <script defer type="module">
             import { getCurrentUser, createTransaction } from "/javascripts/data/fetchData.js";
             import { navBar } from "/javascripts/partials/nav.js";
             import { userIsSignedIn } from '/javascripts/helpers/userIsSignedIn.js';
+            import { createSideNavItems } from '/javascripts/partials/sidenav.js';
 
             function validateExpiration(expiration) {
                 let today = new Date();
@@ -299,6 +303,7 @@
                     </svg></p>";
 
                     navBar();
+                    createSideNavItems();
                     displayUserInfo();
                 } else {
                     // the user is not logged in,redirect them to the login page

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <%- include('partials/head'); -%>
+  <body style="background-color: #FFF5EE;">
+    <div style="background-color: #0080ff"></div>
+    <%- include('partials/nav'); -%>
+    <div class="col-12 row">
+      <%- include('partials/sidenav'); -%>
+      
+      <div class="col">
+        <div class="container">
+            <br>
+            
+            <!-- Stock Search Bar -->
+            <section id="stockSearchBar">
+              <div class="row justify-content-center">
+                <form class="form-inline col-8">
+                  <input class="form-control" style="width:80%" placeholder="Search Stocks" id="searchStocksInput">
+                  <button class="btn btn-primary text-white" style="width:20%" type="button" onclick="searchStocks()">Search</button>
+                </form>
+              </div>
+            </section> 
+            <br>
+          
+            <!-- List of stocks retrieved from backend -->
+            <div class="row justify-content-center">
+              <div class="col-12">
+                <section id="listStock"></section>
+              </div>
+            </div>
+            <br>
+
+            <!-- News on stock market -->
+            <section id="listNews">
+              <div class="card border-warning" style="height:200px; width:100%">
+                <div style="height:80px"></div>
+                <div class="d-flex justify-content-center align-middle">
+                  <div class="row">
+                    <div class="spinner-grow text-warning" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Footer (imported) -->
+            <%- include('partials/footer'); -%>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <script defer type="module" src="javascripts/page/platform.js"></script>
+    <script defer type="module">
+      import { displayContainerListStocks } from '/javascripts/containers/containerListStocks.js';
+      // Retrieve stock list based on user input
+      async function searchStocks() {
+        let elSearchValue = document.getElementById("searchStocksInput").value;
+        let req = "http://127.0.0.1:8000/stocks/general/?search=" + elSearchValue;
+        fetch(req)
+          .then(response => response.json())
+          .then(data => displayContainerListStocks(data));
+      }
+
+      // ------------ eventHandlers() ------------       
+      // Handle input when user presses enter instead of clicking button
+      let elSearchInput = document.getElementById("searchStocksInput")
+      elSearchInput.addEventListener("keydown", function(e){
+        if (e.keyCode === 13) {
+          e.stopImmediatePropagation()
+          e.preventDefault()
+          searchStocks();
+        }
+      })
+      
+      window.searchStocks = searchStocks;
+
+    </script>
+  </body>
+</html>

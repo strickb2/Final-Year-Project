@@ -4,28 +4,32 @@
         <!-- Navbar -->
         <%- include('partials/nav'); -%>
 
-        <!-- Container -->
-        <div class="container">
-            <!-- Title -->
-            <section class="text-center container">
-                <div class="row py-lg-5">
-                    <div class="col-lg-6 col-md-8 mx-auto">
-                        <h1 class="fw-light">Transactions Table</h1>
+        <div class="col-12 row">
+            <%- include('partials/sidenav'); -%>
+            <!-- Container -->
+            <div class="container">
+                <!-- Title -->
+                <section class="text-center container">
+                    <div class="row py-lg-5">
+                        <div class="col-lg-6 col-md-8 mx-auto">
+                            <h1 class="fw-light">Transactions Table</h1>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- Transaction History Table -->
-            <section>
-                <div id="BalanceTable"></div>
-            </section>
-            <br>
+                <!-- Transaction History Table -->
+                <section>
+                    <div id="BalanceTable"></div>
+                </section>
+                <br>
+            </div>
         </div>
 
         <!-- Javascript -->
         <script defer type="module">
             import { navBar } from "/javascripts/partials/nav.js";
             import { userIsSignedIn } from '/javascripts/helpers/userIsSignedIn.js';
+            import { createSideNavItems } from '/javascripts/partials/sidenav.js';
 
             // Fetch User Transactions
             async function getUserTransactions(){
@@ -146,6 +150,7 @@
                 if (statusSignIn) {
                     displayTable();
                     navBar();
+                    createSideNavItems();
                 } else {
                     // the user is not logged in,redirect them to the login page
                     window.location.href = "/login";

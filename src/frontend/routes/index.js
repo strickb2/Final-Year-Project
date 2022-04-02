@@ -6,8 +6,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'StockCompete' });
 });
 
-router.get('/welcome', function(req, res, next){
-  res.render('welcome', { title: 'StockCompete | Welcome' })
+router.get('/platform', function(req, res, next){
+  res.render('platform', { title: 'StockCompete | Platform' })
 });
 
 router.get('/login', function(req, res, next){

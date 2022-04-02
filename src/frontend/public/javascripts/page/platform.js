@@ -2,6 +2,7 @@ import { getStockData, getNewsArticles } from '../data/fetchData.js';
 import { displayContainerListStocks } from '../containers/containerListStocks.js';
 import { displayContainerListNews } from '../containers/containerListNews.js';
 import { navBar } from '../partials/nav.js';
+import { createSideNavItems } from '../partials/sidenav.js';
 import { userIsSignedIn } from '../helpers/userIsSignedIn.js';
 
 async function init() {
@@ -9,6 +10,7 @@ async function init() {
 
     if (statusSignIn) {
         navBar();
+        createSideNavItems();
         // Get data and populate containers 
         getStockData().then(oDataStocks => displayContainerListStocks(oDataStocks));
         getNewsArticles("Stock Market").then(oDataStocks => displayContainerListNews(oDataStocks));

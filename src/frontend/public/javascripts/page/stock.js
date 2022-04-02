@@ -6,12 +6,15 @@ import { displayContainerStockTwitter } from '../containers/containerStockTwitte
 import { displayContainerStockGraph } from '../containers/containerStockGraph.js';
 import { navBar } from '../partials/nav.js';
 import { userIsSignedIn } from '../helpers/userIsSignedIn.js';
+import { createSideNavItems } from '../partials/sidenav.js';
 
 async function init() {
     let statusSignIn = await userIsSignedIn();
 
     if (statusSignIn) {
         navBar();
+        createSideNavItems();
+
         // Get URL Param
         const queryString = window.location.search 
         const urlParams = new URLSearchParams(queryString); // Variable initalized to add query parameter to URL
