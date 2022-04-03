@@ -11,29 +11,40 @@ export function displayContainerListStocks(oData) {
 
     if (oData.length != 0) {
         // If there is data returned create a table
-        let tableStockList = document.createElement("table");
-        tableStockList.className = "table table-hover mb-0";
+        let divTableHead = document.createElement("div");
+        divTableHead.style = "background-color: #6610f2!important;";
+
+        let tableStockListHeader = document.createElement("table");
+        tableStockListHeader.className = "table table-hover mb-0 mr-4";
 
         // Create a table header
         let tableHeaderStockList = document.createElement("thead");
-        tableHeaderStockList.className = "mt-0 text-white"
+        tableHeaderStockList.className = "text-white"
         tableHeaderStockList.style="background-color: #6610f2!important;"
         tableHeaderStockList.innerHTML = "<tr class='text-center'> \
-            <th scope='col'>Logo</th> \
-            <th scope='col'>Stock</th> \
-            <th scope='col'>High</th> \
-            <th scope='col'>Low</th> \
-            <th scope='col'>Current</th> \
-            <th scope='col'>Diff (1d)</th> \
+            <th class='col-2'>Logo</th> \
+            <th class='col-2'>Stock</th> \
+            <th class='col-2'>High</th> \
+            <th class='col-2'>Low</th> \
+            <th class='col-2'>Current</th> \
+            <th class='col-2'>Diff (1d)</th> \
             </tr>"
-        tableStockList.appendChild(tableHeaderStockList);
+        tableStockListHeader.appendChild(tableHeaderStockList);
+        divTableHead.appendChild(tableStockListHeader);
+        cardListStocks.appendChild(divTableHead);
+
+        let containerTable = document.createElement("div");
+        containerTable.style = "overflow: auto; height: 450px; display: block;";
+
+        let tableStockList = document.createElement("table");
+        tableStockList.className = "table table-hover mb-0";
 
         // Initialize table body for stock rows
         let tableBodyStockList = document.createElement("tbody");
         for (let idStock in oData) {
             let rowStockList = document.createElement("tr");
             rowStockList.style = "transform: rotate(0);"
-            rowStockList.className = "text-center justify-content-center"
+            rowStockList.className = "text-center col-2 justify-content-center"
             let oStock = oData[idStock];
 
             // Row structure on table is as follows:
@@ -42,6 +53,7 @@ export function displayContainerListStocks(oData) {
             
             // Add stock image to start of row
             let rowItem = document.createElement("td");
+            rowItem.className = "col-2";
             let rowItemImage = document.createElement("img");
             rowItemImage.src = oStock.logo;
             rowItemImage.alt = oStock.name + " Logo Image";
@@ -56,12 +68,13 @@ export function displayContainerListStocks(oData) {
                 let dataPoints = [oCurrentStockValue['h'], oCurrentStockValue['l'], oCurrentStockValue['c']]
 
                 rowItem = document.createElement("th");
-                rowItem.scope = "row"
+                rowItem.scope = "row";
                 rowItem.innerHTML = "<a href='/stock/?stock_id=" + oStock.id + "' class='stretched-link'>" + oStock.name + "</a>";
                 rowStockList.appendChild(rowItem);
 
                 for (let dataPoint in dataPoints) {
                     rowItem = document.createElement("td");
+                    rowItem.className = "col-2";
                     rowItem.innerHTML = dataPoints[dataPoint];
                     rowStockList.appendChild(rowItem);
                 }
@@ -70,9 +83,9 @@ export function displayContainerListStocks(oData) {
                 rowItem = document.createElement("td");
                 rowItem.innerHTML = oCurrentStockValue['dp'] + "%"
                 if (oCurrentStockValue['dp'] < 0) {
-                    rowItem.className = "text-danger";
+                    rowItem.className = "text-danger col-2";
                 } else {
-                    rowItem.className = "text-success";
+                    rowItem.className = "text-success col-2";
                 }
                 rowStockList.appendChild(rowItem);
 
@@ -80,7 +93,9 @@ export function displayContainerListStocks(oData) {
             });
         };
         tableStockList.appendChild(tableBodyStockList);
-        cardListStocks.appendChild(tableStockList);
+
+        containerTable.appendChild(tableStockList);
+        cardListStocks.appendChild(containerTable);
         containerListStocks.appendChild(cardListStocks);
     } else {
         // If there is no data returned

@@ -8,16 +8,16 @@ export function displayContainerStock(oStock, oStockCurrent) {
 
     // Card with general stock info
     let cardStockInfo = document.createElement("div");
-    cardStockInfo.className = "card p-0 shadow ";
+    cardStockInfo.className = "card p-0 shadow col-12";
 
     // Card info row
     let cardStockInfoRow = document.createElement("div");
-    cardStockInfoRow.className = "row g-0 p-2";
+    cardStockInfoRow.className = "col-12 row g-1 p-2";
 
     // Image on left of card
     let cardStockInfoLogo = document.createElement("div");
-    cardStockInfoLogo.className = "col-3 p-2 ";
-    cardStockInfoLogo.innerHTML = "<img src='" + oStock.logo + "' class='img-fluid rounded-start' alt='" + oStock.name + "Logo Image'>";
+    cardStockInfoLogo.className = "col-3 p-2 text-center";
+    cardStockInfoLogo.innerHTML = "<img src='" + oStock.logo + "' class='img-fluid rounded-start' style='max-height:200px; max-width: 230px' alt='" + oStock.name + "Logo Image'>";
     cardStockInfoRow.appendChild(cardStockInfoLogo);
 
     // General Stock Info Center of card
