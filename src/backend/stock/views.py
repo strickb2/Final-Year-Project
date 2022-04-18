@@ -82,7 +82,7 @@ class LeaderboardViewSet(viewsets.ModelViewSet):
     '''
     API Endpoint: List of top 20 users and current users position
     '''
-    queryset = Leaderboard.objects.all()
+    queryset = Leaderboard.objects.all().order_by("-points")
     serializer_class = LeaderboardSerializer
     permission_classes = [AllowAny]
 

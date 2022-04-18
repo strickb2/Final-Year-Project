@@ -10,15 +10,20 @@
             <div class="container">
                 <!-- Title -->
                 <section class="text-center container">
-                    <div class="row py-lg-5">
+                    <div class="row pt-lg-5">
                         <div class="col-lg-6 col-md-8 mx-auto">
-                            <h1 class="fw-light">Transactions Table</h1>
+                            <h1 class="display-4">Transactions Table</h1>
                         </div>
                     </div>
                 </section>
 
                 <!-- Transaction History Table -->
-                <section>
+                <section class="py-lg-5">
+                    <div class="row mb-1">
+                        <div class="col-12" id="BalanceTableHeader">
+                        </div>
+                    </div>
+                        
                     <div id="BalanceTable"></div>
                 </section>
                 <br>
@@ -54,6 +59,7 @@
             // Display Transaction Table
             async function displayTable() {
                 const balanceTable = document.getElementById("BalanceTable");
+                const balanceTableHeader = document.getElementById("BalanceTableHeader");
                 balanceTable.style = "overflow: auto; height: 450px; display: block;";
                 let oPromise = getUserTransactions();
 
@@ -61,6 +67,98 @@
                 // Loop through stocks
                 oPromise.then(oStocks => {
                     if (oStocks.length > 0) {
+
+                        // Add Download CSV Button
+                        let buttonCSV = document.createElement("button");
+                        buttonCSV.className =  "btn btn-success d-flex float-right";
+                        buttonCSV.style = "";
+                        buttonCSV.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16"> \
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/> \
+                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/> \
+                        </svg>';
+                        buttonCSV.onclick = function() {
+                            // Create a 2D Array of transactions
+                            console.log(oStocks)
+                            let aTransactions = new Array(['ID', 'Date', 'Type', 'Name', 'Quantity', 'Total'])
+                            for (let idStock in oStocks) {
+                                let aTransaction = new Array();
+                                
+                                // Transaction ID
+                                aTransaction.push(oStocks[idStock].id);
+
+                                // Date
+                                aTransaction.push(oStocks[idStock].datetime.substring(0, 10));
+
+                                // Transaction Type
+                                if (oStocks[idStock].type == 1) {
+                                    aTransaction.push("Buy");
+                                } else if (oStocks[idStock].type == 3) {
+                                    aTransaction.push("Sell");
+                                } else if (oStocks[idStock].type == 2) {
+                                    aTransaction.push("Withdraw");
+                                } else if (oStocks[idStock].type == 4) {
+                                    aTransaction.push("Add");
+                                } else if (oStocks[idStock].type == 5) {
+                                    aTransaction.push("Stripe");
+                                } else if (oStocks[idStock].type == 6) {
+                                    aTransaction.push("Commission");
+                                }
+
+                                // Stock Name
+                                if (oStocks[idStock].stock) {
+                                    aTransaction.push(oStocks[idStock].stock.stock_name);
+                                } else {
+                                    aTransaction.push("-");
+                                };
+
+                                // Stock Quantity
+                                if (oStocks[idStock].stock) {
+                                    aTransaction.push(oStocks[idStock].stock.quantity);
+                                } else {
+                                    aTransaction.push("-");
+                                };
+
+                                // Transaction Total
+                                aTransaction.push("€" + oStocks[idStock].total);
+
+                                // Add Transaction list
+                                aTransactions.push(aTransaction);
+                            };
+
+                            // Completed with guidance from https://stackoverflow.com/questions/14964035/how-to-export-javascript-array-info-to-csv-on-client-side
+                            // Convert to CSV Format
+                            let csvTransactions = ArrayToCSV(aTransactions);
+                            
+                            function ArrayToCSV(data) {
+                                return data.map(row =>
+                                    row
+                                    .map(String)  // convert every value to String
+                                    .map(v => v.replaceAll('"', '""'))  // escape double colons
+                                    .map(v => `"${v}"`)  // quote it
+                                    .join(',')  // comma-separated
+                                ).join('\r\n');  // rows starting on new lines
+                            };
+
+                            console.log(csvTransactions);
+
+                            function downloadBlob(content, filename) {
+                                // Create a blob
+                                var BOM  = '\uFEFF';
+                                var blob = new Blob([BOM + content], { type: 'text/csv;charset=utf-8' });
+                                var url = URL.createObjectURL(blob);
+    
+                                // Create a link to download it
+                                var pom = document.createElement('a');
+                                pom.href = url;
+                                pom.setAttribute('download', filename);
+                                pom.click();
+                            };
+
+                            downloadBlob(csvTransactions, 'transactions.csv');
+                        };
+                        BalanceTableHeader.appendChild(buttonCSV);
+
+
                         // Create Table Head
                         let elBalanceTable = document.createElement('table');
                         elBalanceTable.className = "table table-striped table-hover";
@@ -111,7 +209,6 @@
                             } else if (oStock.type == 6) {
                                 stockType.innerHTML = "Commission";
                             }
-                            // Add Stripe5 + Commission6 Types
                             containerBalance.appendChild(stockType);
 
                             // Stock Name + Quantity
