@@ -34,7 +34,7 @@ export function displayContainerListStocks(oData) {
         cardListStocks.appendChild(divTableHead);
 
         let containerTable = document.createElement("div");
-        containerTable.style = "overflow: auto; height: 450px; display: block;";
+        containerTable.style = "overflow: auto; max-height: 450px; display: block;";
 
         let tableStockList = document.createElement("table");
         tableStockList.className = "table table-hover mb-0";
@@ -75,13 +75,13 @@ export function displayContainerListStocks(oData) {
                 for (let dataPoint in dataPoints) {
                     rowItem = document.createElement("td");
                     rowItem.className = "col-2";
-                    rowItem.innerHTML = dataPoints[dataPoint];
+                    rowItem.innerHTML = "€" + Number(Math.round(dataPoints[dataPoint] + "e" + 2) + "e" + -2).toFixed(2);
                     rowStockList.appendChild(rowItem);
                 }
                 
                 // Add Percentage Difference with coloured text
                 rowItem = document.createElement("td");
-                rowItem.innerHTML = oCurrentStockValue['dp'] + "%"
+                rowItem.innerHTML = oCurrentStockValue['dp'].toFixed(2) + "%"
                 if (oCurrentStockValue['dp'] < 0) {
                     rowItem.className = "text-danger col-2";
                 } else {
